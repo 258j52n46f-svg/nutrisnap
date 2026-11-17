@@ -755,6 +755,45 @@ img.kph{width:100%;height:100%;object-fit:cover;display:block}
 .hhsplit div{background:var(--card2);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:4px}
 .hhsplit b{font-size:13.5px}.hhsplit span{font-size:12.5px;color:var(--ink2);line-height:1.4}
 
+/* ---------- Design-Feinschliff: ruhiger, hochwertiger ---------- */
+:root:not([data-theme=light]){--bg:#0A0A0B;--card:#131315;--card2:#1B1B1E;--line:rgba(255,255,255,.065);--ink:#F4F1EB;--ink2:#A3A09A;--ink3:#6B6963;--acc:#D8B277;--accInk:#1A1408;--accSoft:rgba(216,178,119,.12);--shadow:0 20px 50px rgba(0,0,0,.55)}
+:root:not([data-theme=light]) body{background:radial-gradient(120% 50% at 50% -10%,#16140f 0%,#0A0A0B 60%) fixed,#0A0A0B}
+#main{padding-left:20px;padding-right:20px}
+h1{font-size:34px;letter-spacing:-.025em;font-weight:600;margin:10px 0 18px}
+h2{font-size:12.5px;font-weight:500;color:var(--ink3);letter-spacing:.02em;margin:0 0 12px}
+.card{border-radius:24px;padding:20px 18px;margin-bottom:14px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.028),rgba(255,255,255,0) 40%),var(--card);box-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 12px 28px -18px rgba(0,0,0,.8)}
+.card .card{background:var(--card2);box-shadow:none}
+.row{border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0}
+.btn{border-radius:16px;font-weight:600;letter-spacing:.01em;min-height:50px}
+.btn:not(.sec):not(.ghost){background:linear-gradient(180deg,color-mix(in srgb,var(--acc) 100%,#fff 10%),var(--acc));color:var(--accInk);box-shadow:0 8px 22px -10px color-mix(in srgb,var(--acc) 70%,transparent)}
+.btn.sec{background:transparent;border:1px solid var(--line);color:var(--ink)}
+.seg{background:var(--card);border:1px solid var(--line);border-radius:16px}
+.seg button{color:var(--ink3);font-weight:500}
+.seg button.on{background:var(--card2);color:var(--ink);font-weight:600;box-shadow:0 1px 0 rgba(255,255,255,.06) inset}
+.chip,.kc{background:transparent;border:1px solid var(--line);color:var(--ink2);font-weight:500}
+.chip.on,.kc.on{background:var(--accSoft);color:var(--acc);border-color:color-mix(in srgb,var(--acc) 35%,transparent)}
+.inp{background:var(--card);border:1px solid var(--line);border-radius:16px}
+.inp:focus{outline:0;border-color:color-mix(in srgb,var(--acc) 55%,transparent)}
+.kcard,.khero{border-radius:26px;border:1px solid var(--line);box-shadow:0 22px 40px -26px rgba(0,0,0,.9)}
+.kcard .kimg img,.khero img{filter:saturate(1.04) contrast(1.02)}
+.aib{background:rgba(10,10,11,.55);border:1px solid rgba(255,255,255,.12);font-weight:500}
+.kadd{background:var(--acc);box-shadow:0 8px 20px -6px rgba(0,0,0,.6)}
+.ib{background:transparent;border:1px solid var(--line)}
+#tabbar{border-top:0;background:color-mix(in srgb,#0A0A0B 78%,transparent);box-shadow:0 -1px 0 var(--line)}
+#tabbar button{font-weight:500;color:var(--ink3);gap:2px}
+#tabbar button svg{stroke-width:1.6}
+#tabbar button.on{color:var(--acc);font-weight:600}
+.dstrip .t{font-weight:600}
+.empty{color:var(--ink3);font-size:14px;line-height:1.45}
+.wkday.today{border-color:color-mix(in srgb,var(--acc) 55%,transparent)}
+.card .small.muted,.small.muted{color:var(--ink3)}
+::selection{background:var(--accSoft)}
+.card{padding:18px 16px}
+.mrow:has(.top){display:block;padding:0;background:none;border-radius:0;margin:16px 0}
+.mrow:has(.top) .top{gap:10px}
+.mrow:has(.top) .nm{white-space:nowrap}
+
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -5536,6 +5575,82 @@ const _imgNote9b = imgNoteTxt;
 imgNoteTxt = function(r){ return aiOf(r) && imgKind(r) === 'none' ? ' Das Bild ist KI-generiert und zeigt nicht euer konkretes Gericht.' : _imgNote9b(r); };
 const _imgCard9b = imgCard;
 imgCard = function(r){ let h = _imgCard9b(r); if (aiOf(r) && imgKind(r) === 'none') h = h.replace(/Angezeigt wird ein freies Foto[^<]*|Noch kein Bild – angezeigt wird eine Illustration\./, 'Angezeigt wird euer KI-Bild. Du kannst es durch ein eigenes Foto ersetzen.'); return h; };
+
+/* ---------- Tracker: Gerichte & Klassiker durchsuchbar ---------- */
+(function(){
+  const have = new Set(FOODS.map(f => norm(f.n)));
+  const add = (n, k, p, c, f, pn, pg, id) => {
+    const key = norm(n); if (have.has(key)) return; have.add(key);
+    FOODS.push({id: id || ('b' + FOODS.length), n, per100:{k, p, c, f}, portion: pn ? {name:pn, g:pg} : null, src:'db'});
+  };
+  /* Klassiker (Richtwerte pro 100 g, übliche Durchschnittswerte) */
+  [
+  ['Currywurst mit Pommes',200,7,18,11,'Portion',450],
+  ['Currywurst (ohne Beilage)',250,12,6,19,'Portion',200],
+  ['Pommes frites',300,3.5,40,14,'Portion',150],
+  ['Döner Kebab im Fladenbrot',215,12,19,10,'Stück',350],
+  ['Dürüm Döner',205,11,20,9,'Stück',380],
+  ['Döner Teller mit Reis und Salat',190,12,12,10,'Portion',500],
+  ['Falafel im Fladenbrot',230,8,30,9,'Stück',300],
+  ['Cheeseburger',260,13,24,12,'Stück',150],
+  ['Hamburger',245,12,26,10,'Stück',130],
+  ['Pizza Salami (Ofen)',265,11,30,11,'Pizza',400],
+  ['Pizza Schinken (Ofen)',250,11,30,9,'Pizza',400],
+  ['Schnitzel Wiener Art',240,17,12,14,'Stück',150],
+  ['Schnitzel mit Pommes',250,11,22,13,'Portion',400],
+  ['Spaghetti Bolognese',150,8,17,5,'Portion',450],
+  ['Spaghetti Carbonara',190,8,19,9,'Portion',400],
+  ['Spaghetti mit Tomatensoße',125,4,22,2.5,'Portion',400],
+  ['Lasagne',150,8,13,7,'Portion',350],
+  ['Gulasch mit Nudeln',130,10,13,4,'Portion',400],
+  ['Rouladen mit Kartoffeln und Rotkohl',110,9,9,4,'Portion',450],
+  ['Kassler mit Sauerkraut und Kartoffelpüree',120,9,8,6,'Portion',400],
+  ['Sauerbraten mit Knödeln',120,9,12,4,'Portion',400],
+  ['Bratkartoffeln',150,3,22,6,'Portion',300],
+  ['Kartoffelpüree',90,2,14,3,'Portion',250],
+  ['Kartoffelsalat',130,2,15,7,'Portion',200],
+  ['Nudelsalat',190,4,22,9,'Portion',200],
+  ['Linseneintopf',90,5,12,2,'Portion',400],
+  ['Gemüsesuppe',35,1.5,5,1,'Teller',400],
+  ['Tomatensuppe',50,1.5,7,2,'Teller',400],
+  ['Hühnersuppe',40,3.5,4,1,'Teller',400],
+  ['Mac and Cheese',190,8,20,9,'Portion',350],
+  ['Gnocchi mit Tomatensoße',120,4,23,1.5,'Portion',350],
+  ['Risotto',150,4,24,4,'Portion',350],
+  ['Pad Thai',160,7,22,5,'Portion',400],
+  ['Burrito',200,9,25,7,'Stück',300],
+  ['Hähnchen-Wrap',200,10,22,8,'Stück',220],
+  ['Nachos mit Käse',330,9,38,16,'Portion',150],
+  ['Fish and Chips',230,10,23,11,'Portion',400],
+  ['Chicken Nuggets',250,15,16,14,'Stück',20],
+  ['Ofenkartoffel mit Kräuterquark',100,5,16,2,'Portion',350],
+  ['Spiegelei',190,13,0.5,15,'Stück',60],
+  ['Pfannkuchen',195,6,27,7,'Stück',80],
+  ['Kaiserschmarrn',220,6,28,9,'Portion',250],
+  ['Milchreis mit Zimt und Zucker',130,3.5,23,2.5,'Portion',300],
+  ['Leberkäsebrötchen',270,12,20,16,'Stück',150],
+  ['Bratwurst im Brötchen',280,11,24,15,'Stück',150],
+  ['Fischbrötchen',210,12,22,8,'Stück',150],
+  ['Butterbrezel',300,8,52,6,'Stück',90],
+  ['Schokocroissant',400,7,45,22,'Stück',70],
+  ['Berliner (Krapfen)',350,6,45,16,'Stück',70],
+  ['Apfelstrudel',230,3,34,9,'Stück',150],
+  ['Käsekuchen',250,7,28,12,'Stück',120],
+  ['Schwarzwälder Kirschtorte',260,4,28,15,'Stück',120],
+  ['Sushi Nigiri mit Lachs',150,7,26,2,'Stück',30],
+  ['Sushi Maki',145,4,28,1.5,'Stück',25]
+  ].forEach(r => add(...r));
+  /* Alle Rezepte: Nährwerte aus den Zutaten, pro Portion */
+  KC.forEach(r => {
+    try {
+      const v = kcNut(r); if (!v || v.cov < 0.8 || !(v.k > 0)) return;
+      let g = 0;
+      r.ing.forEach(i => { const inf = ingInfo(i.n); if (!inf || inf.hide || inf.basic || i.a == null) return; const x = gramsOf(inf, i.a, i.u); if (x != null) g += x; });
+      const gp = Math.max(200, Math.round(g / (r.s || 2)));
+      add(r.n, Math.round(v.k / gp * 1000) / 10, Math.round(v.p / gp * 1000) / 10, Math.round(v.c / gp * 1000) / 10, Math.round(v.f / gp * 1000) / 10, 'Portion', gp, 'g' + r.id);
+    } catch (e) {}
+  });
+})();
 
 /* ---------- 11 Eigenständiger Betrieb: Barcode-Scan (Open Food Facts) ---------- */
 ui.bc = ui.bc || {status: 'idle', code: '', food: null, msg: ''};
