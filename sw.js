@@ -1,5 +1,5 @@
 /* NutriSnap – Dienst-Worker: App startet auch ohne Netz, Updates kommen automatisch, sobald Netz da ist. */
-const V = 'ns-shell-v4';
+const V = 'ns-shell-v5';
 const PH = 'ns-photos-v1';
 const FILES = ['./', 'index.html', 'config.js', 'manifest.webmanifest', 'icon-192.png', 'apple-touch-icon.png', 'zxing.min.js', 'fotos.js'];
 self.addEventListener('install', e => {
@@ -26,7 +26,7 @@ self.addEventListener('fetch', e => {
   e.respondWith((async () => {
     const cache = await caches.open(V);
     try {
-      const net = await Promise.race([fetch(r), new Promise((_, rej) => setTimeout(() => rej(new Error('slow')), 5000))]);
+      const net = await Promise.race([fetch(r), new Promise((_, rej) => setTimeout(() => rej(new Error('slow')), u.pathname.endsWith('fotos.js') ? 90000 : 5000))]);
       if (net && net.ok) cache.put(r, net.clone());
       return net;
     } catch (err) {
