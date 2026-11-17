@@ -1,5 +1,6 @@
 /* NutriSnap – Dienst-Worker: App startet auch ohne Netz, Updates kommen automatisch, sobald Netz da ist. */
-const V = 'ns-shell-v1';
+const V = 'ns-shell-v2';
+const PH = 'ns-photos-v1';
 const FILES = ['./', 'index.html', 'config.js', 'manifest.webmanifest', 'icon-192.png', 'apple-touch-icon.png', 'zxing.min.js'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(V).then(c => Promise.all(FILES.map(f => c.add(f).catch(() => {})))).then(() => self.skipWaiting()));
@@ -9,6 +10,14 @@ self.addEventListener('activate', e => {
 });
 self.addEventListener('fetch', e => {
   const r = e.request, u = new URL(r.url);
+  if (r.method === 'GET' && u.hostname === 'upload.wikimedia.org') {   /* freie Rezeptfotos: einmal laden, danach auch offline */
+    e.respondWith(caches.open(PH).then(async c => {
+      const hit = await c.match(r.url); if (hit) return hit;
+      try { const net = await fetch(r); if (net && (net.ok || net.type === 'opaque')) c.put(r.url, net.clone()); return net; }
+      catch (err) { return new Response('', {status: 504}); }
+    }));
+    return;
+  }
   if (r.method !== 'GET' || u.origin !== location.origin) return;
   if (u.pathname.indexOf('/_blob/') >= 0) {            /* lokal gespeicherte Rezeptbilder */
     e.respondWith(caches.open('ns-blobs').then(c => c.match(r.url)).then(m => m || new Response('', {status: 404})));
