@@ -13,6 +13,7 @@
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <script src="config.js"></script>
+<script src="fotos.js" defer onload="try{render()}catch(e){}"></script>
 <script>
 /* NutriSnap – eigenständiger Betrieb ohne Claude.
    Stellt dieselbe kleine Schnittstelle bereit, die die App sonst von Claude bekommt:
@@ -2909,6 +2910,14 @@ Cayennepfeffer|cayenne|g|6|||318,12,57,17||b
 Ras el Hanout||g|6|||340,10,55,12||b
 TK-Gemüse|gemüsemischung,tk-gemüse,asia-gemüse,wokgemüse|g|7||450|45,2.5,7,.5||
 Pommes|tk-pommes,pommes frites|g|7||750|150,2.5,22,6||
+Spätzle|spaetzle|g|4||500|155,5.5,28,2||
+Maultaschen|maultasche|g|7||250|200,8.5,24,7||
+Kartoffelknödel|knödel,klöße,kartoffelklöße|Stk|4|80||115,2.5,25,.5||
+Gewürzgurke|gewürzgurken,essiggurke,saure gurke|g|0|60||18,.5,3,.1||
+Apfelmus||g|0||360|60,.3,14,.1||
+Röstzwiebeln|röstzwiebel|g|3||150|570,6,39,43||
+Paneer||g|2||200|300,18,3,24||
+Falafel|falafelbällchen|g|5||200|330,13,31,17||
 `;
 const ING = {}, ING_LIST = [];
 ING_SRC.trim().split('\n').forEach(l => {
@@ -3724,6 +3733,380 @@ D2('🥐','Mini-Quiches mit Schinken',['Backen','Snack','Fleisch'],35,'einfach',
  '275 g Blätterteig;100 g Schinken;2 Ei;100 ml Sahne;60 g Käse;Salz;Pfeffer;Muskat',
  'Backofen auf 200 °C vorheizen, Blätterteig ausstechen und in Muffinmulden drücken.|Schinken würfeln und auf die Böden geben.|Eier, Sahne, Käse und Gewürze verrühren und darüber füllen.|18 Minuten backen.',
  'Backofen,Muffinform','Warm oder kalt schmecken sie als Fingerfood.');
+
+/* ---- Rezepte passend zu den KI-Bildern, Teil E ---- */
+D2('🍛','Gemüsepfanne mit Reis',['Vegetarisch','Schnell'],30,'einfach',2,
+ '200 g Reis;1 Zucchini;1 Paprika;1 Karotte;200 g Kirschtomaten;2 Zehe Knoblauch;2 EL Olivenöl;1 TL Oregano;Salz;Pfeffer',
+ 'Reis kochen.|Gemüse in Stücke schneiden.|Gemüse und Knoblauch im Öl 10 Minuten braten, mit Oregano, Salz und Pfeffer würzen.|Mit dem Reis servieren.',
+ 'Pfanne,Topf','Mit Kräutern oder einem Löffel Joghurt wird es frischer.');
+D2('🍳','Reis-Gemüse-Pfanne mit Ei',['Vegetarisch','Schnell'],25,'einfach',2,
+ '200 g Reis;3 Ei;200 g Erbsen;1 Karotte;3 Frühlingszwiebel;2 EL Sojasauce;2 EL Öl;Pfeffer',
+ 'Reis kochen und abkühlen lassen.|Karotte würfeln und im Öl 4 Minuten braten, Erbsen zugeben.|Reis zugeben und anbraten, Eier an den Rand schieben und rühren, bis sie stocken.|Alles mischen, mit Sojasauce und Pfeffer abschmecken, Frühlingszwiebeln darüberstreuen.',
+ 'Große Pfanne,Topf','Reis vom Vortag wird besonders körnig.');
+D2('🌶️','Chili sin Carne',['Vegetarisch','Suppen'],40,'einfach',3,
+ '1 Dose Kidneybohnen;1 Dose Schwarze Bohnen;1 Dose Mais;400 g Dosentomaten;1 Paprika;1 Zwiebel;2 Zehe Knoblauch;2 EL Tomatenmark;1 TL Kreuzkümmel;1 TL Paprikapulver;1 EL Öl;100 g Schmand;Salz',
+ 'Zwiebel, Knoblauch und Paprika im Öl 5 Minuten anbraten.|Tomatenmark und Gewürze kurz mitrösten.|Tomaten, abgespülte Bohnen und Mais zugeben und 25 Minuten köcheln.|Mit Salz abschmecken und mit einem Klecks Schmand servieren.',
+ 'Topf','Schmeckt am nächsten Tag noch besser.');
+D2('🧆','Falafel-Bowl',['Vegetarisch'],25,'einfach',2,
+ '250 g Falafel;100 g Hummus;1 Gurke;200 g Kirschtomaten;100 g Kichererbsen;100 g Joghurt;1 Zitrone;1 EL Olivenöl;Salz',
+ 'Falafel nach Packungsangabe im Ofen oder in der Pfanne knusprig erhitzen.|Gurke und Tomaten schneiden.|Joghurt mit Zitronensaft und Salz verrühren.|Alles in Schalen anrichten und mit Olivenöl beträufeln.',
+ 'Backofen,Schüssel','Mit Fladenbrot wird es noch sättigender.');
+D2('🥗','Hummus-Bowl',['Vegetarisch','Salat','Schnell'],15,'einfach',2,
+ '200 g Hummus;2 Tomate;1 Gurke;1 Karotte;100 g Rotkohl;50 g Oliven;1 EL Olivenöl;1 Zitrone;Paprikapulver',
+ 'Gemüse klein schneiden oder raspeln.|Hummus in einer Schale verstreichen.|Gemüse und Oliven darauf anrichten.|Mit Olivenöl, Zitronensaft und Paprikapulver abschließen.',
+ 'Schüssel','Mit Fladenbrot zum Dippen servieren.');
+D2('🥗','Quinoa-Salat mit Feta',['Salat','Vegetarisch'],25,'einfach',2,
+ '150 g Quinoa;100 g Feta;1 Avocado;200 g Kirschtomaten;1 Bund Petersilie;3 EL Olivenöl;1 Zitrone;Salz;Pfeffer',
+ 'Quinoa in Salzwasser 12 Minuten kochen, abgießen und abkühlen lassen.|Tomaten und Avocado würfeln, Petersilie hacken.|Alles mit Feta mischen und mit Olivenöl, Zitronensaft, Salz und Pfeffer abschmecken.',
+ 'Topf,Schüssel','Hält sich gekühlt gut einen Tag.');
+D2('🍝','Mediterraner Nudelsalat',['Pasta','Salat','Vegetarisch','Italienisch'],25,'einfach',3,
+ '250 g Nudeln;100 g Feta;200 g Kirschtomaten;80 g Oliven;1 Paprika;1 Bund Basilikum;4 EL Olivenöl;2 EL Essig;Salz;Pfeffer',
+ 'Nudeln kochen, abgießen und abkühlen lassen.|Tomaten und Paprika schneiden, Basilikum zupfen.|Alles mit Feta und Oliven mischen.|Mit Olivenöl, Essig, Salz und Pfeffer abschmecken und kurz ziehen lassen.',
+ 'Topf,Schüssel','Am nächsten Tag noch kräftiger im Geschmack.');
+D2('🥚','Eiersalat',['Salat','Vegetarisch','Schnell'],20,'einfach',2,
+ '6 Ei;3 EL Mayonnaise;2 EL Joghurt;1 TL Senf;1 Bund Schnittlauch;Salz;Pfeffer',
+ 'Eier 9 Minuten hart kochen, abschrecken und pellen.|Eier würfeln.|Mayonnaise, Joghurt, Senf, Salz und Pfeffer verrühren und unter die Eier heben.|Mit Schnittlauch bestreuen, dazu passt Brot.',
+ 'Topf,Schüssel','Mit Gewürzgurke wird er fruchtiger.');
+D2('🍔','Knuspriger Hähnchen-Burger',['Fleisch'],35,'mittel',2,
+ '2 Hähnchenbrust;2 Burgerbrötchen;60 g Semmelbrösel;1 Ei;2 EL Mehl;40 g Käse;1 Tomate;30 g Salat;2 EL Mayonnaise;4 EL Öl;Salz;Pfeffer',
+ 'Hähnchen flach klopfen und salzen.|In Mehl, verquirltem Ei und Semmelbröseln wenden.|Im Öl pro Seite 5 Minuten goldbraun braten, Käse zum Schmelzen darauflegen.|Brötchen aufschneiden und rösten, mit Mayonnaise, Salat, Tomate und Hähnchen belegen.',
+ 'Pfanne','Statt Braten geht auch Backen bei 200 °C für 20 Minuten.');
+D2('🍔','Veggie-Burger',['Vegetarisch'],35,'mittel',2,
+ '1 Dose Schwarze Bohnen;2 Burgerbrötchen;50 g Haferflocken;1 Ei;1 Zwiebel;1 TL Paprikapulver;1 Tomate;30 g Salat;2 EL Joghurt;3 EL Öl;Salz',
+ 'Bohnen abspülen und grob zerdrücken.|Mit Haferflocken, Ei, gehackter Zwiebel, Paprikapulver und Salz verkneten und zu Patties formen.|Im Öl pro Seite 4 Minuten braten.|Brötchen rösten, mit Joghurt, Salat, Tomate und Patty belegen.',
+ 'Pfanne','Die Masse 10 Minuten ruhen lassen, dann hält sie besser.');
+D2('🍟','Pommes aus dem Ofen',['Vegetarisch','Snack'],45,'einfach',2,
+ '600 g Kartoffeln;2 EL Öl;1 TL Paprikapulver;Salz;100 g Ketchup',
+ 'Backofen auf 220 °C vorheizen, Kartoffeln in Stifte schneiden.|Mit Öl, Paprikapulver und Salz vermengen.|Auf einem Blech verteilen und 30 Minuten backen, einmal wenden.|Mit Ketchup servieren.',
+ 'Backofen,Backblech','Kartoffelstifte vorher 15 Minuten wässern, dann werden sie knuspriger.');
+D2('🍠','Süßkartoffel-Pommes mit Dip',['Vegetarisch','Snack'],40,'einfach',2,
+ '600 g Süßkartoffel;2 EL Öl;1 TL Paprikapulver;150 g Joghurt;1 Zitrone;1 Zehe Knoblauch;Salz',
+ 'Backofen auf 220 °C vorheizen, Süßkartoffeln in Stifte schneiden.|Mit Öl, Paprikapulver und Salz mischen und 25 Minuten backen.|Joghurt mit Zitronensaft, Knoblauch und Salz zum Dip verrühren.',
+ 'Backofen,Backblech','Nicht zu dicht auf das Blech legen, sonst werden sie weich.');
+D2('🐟','Backfisch mit Kartoffeln',['Fisch','Hausmannskost'],40,'mittel',2,
+ '400 g Kabeljau;60 g Mehl;1 Ei;60 g Semmelbrösel;500 g Kartoffeln;4 EL Öl;1 Zitrone;100 g Joghurt;1 Bund Petersilie;Salz;Pfeffer',
+ 'Kartoffeln kochen.|Fisch salzen, in Mehl, Ei und Semmelbröseln wenden.|Im Öl pro Seite 4 Minuten goldbraun braten.|Joghurt mit Zitronensaft, Petersilie und Salz verrühren und mit Fisch und Kartoffeln servieren.',
+ 'Pfanne,Topf','Den Fisch vor dem Panieren trocken tupfen.');
+D2('🐟','Lachs mit Reis und Brokkoli',['Fisch','Schnell'],30,'einfach',2,
+ '2 Lachs;200 g Reis;300 g Brokkoli;1 EL Sojasauce;1 EL Honig;1 EL Öl;1 Zitrone;Salz;Pfeffer',
+ 'Reis kochen, Brokkoli in Röschen teilen und 5 Minuten mitgaren.|Lachs mit Sojasauce, Honig und Zitronensaft bestreichen.|Im Öl pro Seite 4 Minuten braten.|Mit Reis und Brokkoli anrichten.',
+ 'Pfanne,Topf','Lachs mit Haut braten, dann bleibt er saftig.');
+D2('🍳','Rührei mit Schnittlauch',['Frühstück','Vegetarisch','Schnell'],10,'einfach',1,
+ '3 Ei;1 EL Milch;1 EL Butter;1 Bund Schnittlauch;2 Scheibe Brot;Salz;Pfeffer',
+ 'Eier mit Milch, Salz und Pfeffer verquirlen.|Butter in der Pfanne bei niedriger Hitze schmelzen und Eier unter Rühren langsam stocken lassen.|Mit Schnittlauch bestreuen und mit Brot servieren.',
+ 'Pfanne','Bei niedriger Hitze bleibt es cremig.');
+D2('🥚','Omelett mit Gemüse',['Frühstück','Vegetarisch','Schnell'],20,'einfach',1,
+ '3 Ei;1 Paprika;1 Tomate;30 g Käse;1 Frühlingszwiebel;1 EL Butter;Salz;Pfeffer',
+ 'Gemüse klein würfeln und in Butter 3 Minuten anbraten, herausnehmen.|Eier verquirlen, würzen und in die Pfanne geben, stocken lassen.|Gemüse und Käse auf eine Hälfte geben, zuklappen und 1 Minute ziehen lassen.',
+ 'Pfanne','Mit Salat wird daraus ein leichtes Abendessen.');
+D2('🍞','Toast Hawaii',['Snack','Schnell'],15,'einfach',2,
+ '4 Scheibe Brot;120 g Schinken;200 g Ananas;120 g Käse;1 EL Butter',
+ 'Backofen auf 200 °C vorheizen, Brot leicht toasten und mit Butter bestreichen.|Mit Schinken, Ananas und Käse belegen.|8 bis 10 Minuten überbacken, bis der Käse goldbraun ist.',
+ 'Backofen,Backblech','Ein Klassiker, der auch Kindern schmeckt.');
+D2('🥪','Croque Monsieur',['Snack','Schnell'],20,'einfach',2,
+ '4 Scheibe Brot;120 g Schinken;100 g Käse;2 EL Butter;1 EL Mehl;150 ml Milch;Muskat;Salz',
+ 'Backofen auf 200 °C vorheizen, Butter-Mehl-Schwitze mit Milch zu einer dicken Béchamel kochen, mit Muskat und Salz würzen.|Brot mit Schinken und etwas Käse zu Sandwiches belegen, Béchamel und Käse obenauf.|10 Minuten überbacken.',
+ 'Topf,Backofen','Mit Salat als Hauptgericht.');
+D2('🍕','Flammkuchen mit Speck und Zwiebeln',['Hausmannskost'],30,'einfach',2,
+ '400 g Pizzateig;150 g Schmand;100 g Speck;1 Zwiebel;Pfeffer;Muskat;Salz',
+ 'Backofen auf 250 °C vorheizen, Teig hauchdünn ausrollen.|Schmand mit Salz, Pfeffer und Muskat verrühren und verstreichen.|Zwiebel in Ringe schneiden, mit Speckwürfeln belegen.|8 bis 10 Minuten backen.',
+ 'Backofen,Backblech,Nudelholz','Der Teig muss sehr dünn sein, dann wird er knusprig.');
+D2('🥔','Kartoffelpfanne mit Speck',['Hausmannskost','Fleisch'],35,'einfach',2,
+ '700 g Kartoffeln;100 g Speck;1 Zwiebel;2 EL Öl;1 Bund Petersilie;Salz;Pfeffer',
+ 'Kartoffeln kochen, pellen und in Scheiben schneiden.|Speck im Öl auslassen, Zwiebel zugeben.|Kartoffeln zugeben und 12 Minuten knusprig braten.|Mit Salz, Pfeffer und Petersilie abschmecken.',
+ 'Pfanne,Topf','Kartoffeln vom Vortag werden besonders knusprig.');
+D2('🥞','Reibekuchen mit Apfelmus',['Hausmannskost','Vegetarisch'],35,'mittel',2,
+ '700 g Kartoffeln;1 Zwiebel;2 Ei;3 EL Mehl;4 EL Öl;200 g Apfelmus;Salz',
+ 'Kartoffeln und Zwiebel reiben und gut ausdrücken.|Mit Eiern, Mehl und Salz vermengen.|Teig portionsweise im heißen Öl flach braten, pro Seite 4 Minuten.|Mit Apfelmus servieren.',
+ 'Pfanne,Reibe','Auf Küchenpapier abtropfen lassen.');
+D2('🍲','Rahmgeschnetzeltes mit Reis',['Fleisch','Hausmannskost'],30,'einfach',2,
+ '400 g Hähnchenbrust;200 g Champignons;1 Zwiebel;200 ml Sahne;100 ml Brühe;200 g Reis;2 EL Öl;1 Bund Petersilie;Salz;Pfeffer',
+ 'Reis kochen.|Hähnchen in Streifen scharf anbraten und herausnehmen.|Zwiebel und Pilze im selben Öl braten, mit Brühe und Sahne ablöschen und 5 Minuten einkochen.|Fleisch zurückgeben, würzen und mit Petersilie und Reis servieren.',
+ 'Pfanne,Topf','Fleisch nur kurz braten, sonst wird es trocken.');
+D2('🍗','Hähnchen in Tomaten-Sahnesoße',['Fleisch','Italienisch'],35,'einfach',2,
+ '400 g Hähnchenbrust;250 g Nudeln;200 g Kirschtomaten;100 g Spinat;150 ml Sahne;2 Zehe Knoblauch;2 EL Olivenöl;30 g Parmesan;Salz;Pfeffer',
+ 'Nudeln kochen.|Hähnchen in Stücken im Öl anbraten, Knoblauch zugeben.|Tomaten, Spinat und Sahne zugeben und 8 Minuten köcheln.|Mit Nudeln mischen und Parmesan darüberreiben.',
+ 'Pfanne,Topf','Mit getrockneten Tomaten wird die Soße kräftiger.');
+D2('🧀','Käsespätzle',['Hausmannskost','Vegetarisch'],35,'einfach',2,
+ '400 g Spätzle;200 g Käse;2 Zwiebel;2 EL Butter;1 Bund Schnittlauch;Salz;Pfeffer;Muskat',
+ 'Zwiebeln in Ringen in der Butter langsam goldbraun braten.|Spätzle schichtweise mit geriebenem Käse in einer heißen Pfanne oder Form mischen und schmelzen lassen.|Mit Muskat, Pfeffer und Salz würzen und mit Röstzwiebeln und Schnittlauch servieren.',
+ 'Pfanne','Auf Wunsch kurz im Ofen überbacken.');
+D2('🥟','Maultaschen mit Zwiebeln',['Hausmannskost'],25,'einfach',2,
+ '250 g Maultaschen;2 Zwiebel;2 EL Butter;1 Bund Schnittlauch;Salz;Pfeffer',
+ 'Maultaschen in Scheiben schneiden.|Zwiebeln in Ringen in Butter goldbraun braten.|Maultaschen zugeben, 6 Minuten braten und mit Schnittlauch servieren.',
+ 'Pfanne','Dazu passt ein grüner Salat.');
+D2('🫘','Linsen mit Spätzle',['Hausmannskost'],40,'einfach',3,
+ '250 g Linsen;300 g Spätzle;100 g Speck;1 Karotte;1 Zwiebel;500 ml Brühe;2 EL Essig;1 EL Öl;Salz;Pfeffer',
+ 'Zwiebel und Karotte würfeln, mit Speck im Öl anbraten.|Linsen und Brühe zugeben, 25 Minuten köcheln.|Mit Essig, Salz und Pfeffer abschmecken.|Spätzle erhitzen und dazu servieren.',
+ 'Topf,Pfanne','Ein schwäbischer Klassiker.');
+D2('🌭','Würstchengulasch mit Spätzle',['Hausmannskost','Fleisch'],35,'einfach',3,
+ '4 Wiener Würstchen;2 Paprika;1 Zwiebel;400 g Passierte Tomaten;2 EL Tomatenmark;1 TL Paprikapulver;300 g Spätzle;2 EL Öl;Salz;Pfeffer',
+ 'Würstchen in Scheiben schneiden, Paprika und Zwiebel würfeln.|Alles im Öl anbraten, Tomatenmark und Paprikapulver kurz mitrösten.|Passierte Tomaten zugeben und 15 Minuten köcheln.|Mit erhitzten Spätzle servieren.',
+ 'Topf,Pfanne','Schnell gemacht und kinderfreundlich.');
+D2('🥣','Soljanka',['Suppen','Fleisch'],40,'mittel',3,
+ '150 g Salami;100 g Schinken;2 Gewürzgurke;1 Zwiebel;2 Paprika;400 g Dosentomaten;2 EL Tomatenmark;500 ml Brühe;100 g Schmand;1 Zitrone;2 EL Öl;Salz;Pfeffer',
+ 'Zwiebel, Paprika, Salami und Schinken würfeln und im Öl anbraten.|Tomatenmark kurz mitrösten, Tomaten und Brühe zugeben.|20 Minuten köcheln, Gewürzgurken zugeben.|Mit Zitronensaft, Salz und Pfeffer abschmecken und mit Schmand servieren.',
+ 'Topf','Das Gurkenwasser gibt eine schöne Säure.');
+D2('🍖','Schweinebraten mit Knödeln und Rotkohl',['Fleisch','Hausmannskost'],120,'mittel',4,
+ '800 g Schweinefleisch;4 Kartoffelknödel;500 g Rotkohl;2 Zwiebel;1 Karotte;500 ml Brühe;2 EL Öl;1 TL Majoran;Salz;Pfeffer',
+ 'Backofen auf 180 °C vorheizen, Fleisch mit Salz, Pfeffer und Majoran einreiben.|Im Öl rundum anbraten, mit Zwiebeln, Karotte und Brühe in eine Form geben.|90 Minuten garen und zwischendurch begießen.|Rotkohl erhitzen, Knödel nach Packungsangabe kochen und mit dem Braten und der Soße servieren.',
+ 'Backofen,Bräter,Topf','Den Braten vor dem Schneiden 10 Minuten ruhen lassen.');
+D2('🥩','Rouladen mit Rotkohl und Knödeln',['Fleisch','Hausmannskost'],120,'schwer',4,
+ '600 g Rindfleisch;60 g Speck;2 Zwiebel;2 Gewürzgurke;2 EL Senf;500 g Rotkohl;4 Kartoffelknödel;500 ml Brühe;2 EL Öl;Salz;Pfeffer',
+ 'Rindfleischscheiben mit Senf bestreichen, mit Speck, Zwiebel und Gurke belegen und aufrollen.|Im Öl rundum anbraten.|Mit Brühe aufgießen und 80 Minuten zugedeckt schmoren.|Mit Rotkohl und gekochten Knödeln servieren.',
+ 'Topf','Mit Küchengarn oder Zahnstochern fixieren.');
+D2('🥔','Bauernschnitzel mit Spiegelei',['Fleisch','Hausmannskost'],40,'mittel',2,
+ '2 Schweineschnitzel;60 g Semmelbrösel;1 Ei;2 EL Mehl;2 Ei;400 g Kartoffeln;1 Zwiebel;4 EL Öl;Salz;Pfeffer',
+ 'Kartoffeln kochen und in Scheiben braten.|Schnitzel klopfen, panieren und im Öl pro Seite 4 Minuten braten.|Zwiebelringe knusprig braten.|Spiegeleier braten und alles zusammen anrichten.',
+ 'Pfanne,Topf','Zwei Pfannen sparen Zeit.');
+D2('🧅','Zwiebel-Sahne-Schnitzel mit Pommes',['Fleisch','Hausmannskost'],40,'mittel',2,
+ '2 Schweineschnitzel;2 Zwiebel;150 ml Sahne;100 ml Brühe;300 g Pommes;3 EL Öl;1 EL Mehl;Salz;Pfeffer',
+ 'Pommes nach Packungsangabe backen.|Schnitzel würzen, mehlen und im Öl pro Seite 4 Minuten braten, herausnehmen.|Zwiebelringe braten, mit Brühe und Sahne ablöschen und einköcheln.|Schnitzel in der Soße wenden und mit Pommes servieren.',
+ 'Pfanne,Backofen','Die Soße mit Mehl leicht binden.');
+D2('🥩','Cordon Bleu mit Kartoffeln',['Fleisch','Hausmannskost'],45,'mittel',2,
+ '2 Schweineschnitzel;40 g Schinken;40 g Käse;60 g Semmelbrösel;1 Ei;2 EL Mehl;400 g Kartoffeln;4 EL Öl;Salz;Pfeffer',
+ 'Schnitzel seitlich eine Tasche einschneiden und mit Schinken und Käse füllen, mit Zahnstochern schließen.|In Mehl, Ei und Semmelbröseln panieren.|Im Öl pro Seite 5 Minuten goldbraun braten.|Mit gekochten Kartoffeln servieren.',
+ 'Pfanne,Topf','Nicht zu heiß braten, damit der Käse schmilzt, bevor die Panade dunkel wird.');
+D2('🍗','Putenschnitzel mit Gemüse und Reis',['Fleisch','Schnell'],35,'einfach',2,
+ '2 Putenbrust;60 g Semmelbrösel;1 Ei;2 EL Mehl;200 g Reis;1 Zucchini;1 Paprika;1 Karotte;4 EL Öl;Salz;Pfeffer',
+ 'Reis kochen, Gemüse würfeln und im Öl 8 Minuten braten.|Putenschnitzel panieren.|Im Öl pro Seite 3 Minuten goldbraun braten.|Mit Reis und Gemüse anrichten.',
+ 'Pfanne,Topf','Puten schnell braten, damit sie saftig bleibt.');
+D2('🧀','Gemüselasagne',['Aufläufe','Vegetarisch','Italienisch'],60,'mittel',4,
+ '250 g Lasagneplatten;1 Zucchini;1 Aubergine;1 Paprika;500 g Passierte Tomaten;250 g Mozzarella;100 g Parmesan;250 ml Sahne;2 Zehe Knoblauch;3 EL Olivenöl;Salz;Pfeffer',
+ 'Backofen auf 180 °C vorheizen, Gemüse würfeln und im Öl mit Knoblauch 10 Minuten anbraten, Tomaten zugeben und köcheln.|Lasagne abwechselnd mit Gemüsesoße, Platten, Sahne und Käse schichten.|Mit Mozzarella und Parmesan abschließen.|35 Minuten backen.',
+ 'Auflaufform,Backofen,Pfanne','Vor dem Anschneiden 10 Minuten ruhen lassen.');
+D2('🍝','Vegane Bolognese',['Pasta','Italienisch','Vegetarisch'],40,'einfach',3,
+ '250 g Spaghetti;200 g Linsen;400 g Passierte Tomaten;1 Karotte;1 Zwiebel;2 Zehe Knoblauch;2 EL Tomatenmark;2 EL Olivenöl;1 TL Oregano;Salz;Pfeffer',
+ 'Zwiebel, Karotte und Knoblauch fein hacken und im Öl anbraten.|Tomatenmark, Linsen, Tomaten, Oregano und 300 ml Wasser zugeben, 25 Minuten köcheln.|Spaghetti kochen und mit der Soße servieren.',
+ 'Topf','Mit Walnüssen im Sugo wird sie noch herzhafter.');
+D2('🥘','Tofu-Gemüse-Pfanne',['Vegetarisch','Asiatisch','Schnell'],25,'einfach',2,
+ '300 g Tofu;300 g Brokkoli;1 Paprika;1 Karotte;3 EL Sojasauce;1 EL Honig;2 Zehe Knoblauch;2 EL Öl',
+ 'Tofu würfeln und im Öl knusprig braten, herausnehmen.|Gemüse und Knoblauch 6 Minuten braten.|Tofu, Sojasauce und Honig zugeben und kurz karamellisieren.',
+ 'Wok oder große Pfanne','Mit Reis oder Nudeln servieren.');
+D2('🧆','Falafel mit Couscous und Joghurt',['Vegetarisch'],30,'einfach',2,
+ '250 g Falafel;150 g Couscous;250 ml Brühe;1 Gurke;2 Tomate;150 g Joghurt;1 Zitrone;1 Bund Petersilie;Salz',
+ 'Falafel nach Packungsangabe erhitzen.|Couscous mit heißer Brühe übergießen und quellen lassen.|Gurke und Tomate würfeln, mit Couscous und Petersilie mischen.|Joghurt mit Zitronensaft und Salz verrühren und dazu servieren.',
+ 'Backofen,Topf','Frische Minze passt sehr gut.');
+
+/* ---- Rezepte passend zu den KI-Bildern, Teil F ---- */
+D2('🥗','Kichererbsen-Bowl mit Avocado',['Vegetarisch','Salat'],20,'einfach',2,
+ '1 Dose Kichererbsen;1 Avocado;200 g Kirschtomaten;1 Gurke;100 g Feta;3 EL Olivenöl;1 Zitrone;Salz;Pfeffer',
+ 'Kichererbsen abspülen und abtropfen.|Gemüse und Avocado würfeln.|Alles in Schalen mit Feta anrichten.|Mit Olivenöl, Zitronensaft, Salz und Pfeffer abschmecken.',
+ 'Schüssel','Kichererbsen vorher in der Pfanne angeröstet schmecken noch besser.');
+D2('🍚','Gebratener Tofu mit Reis und Gemüse',['Vegetarisch','Asiatisch'],30,'einfach',2,
+ '300 g Tofu;200 g Reis;200 g Brokkoli;1 Paprika;3 EL Sojasauce;1 EL Honig;1 EL Sesam;2 EL Öl',
+ 'Reis kochen.|Tofu würfeln und im Öl rundum knusprig braten.|Gemüse zugeben und 5 Minuten mitbraten.|Sojasauce und Honig zugeben, kurz einkochen und mit Sesam bestreuen.',
+ 'Pfanne,Topf','Den Tofu vorher ausdrücken, dann wird er knuspriger.');
+D2('🍠','Süßkartoffel-Curry',['Vegetarisch','Asiatisch'],40,'einfach',3,
+ '600 g Süßkartoffel;1 Dose Kichererbsen;400 ml Kokosmilch;2 EL Currypaste;1 Zwiebel;100 g Spinat;1 EL Öl;Salz;1 Zitrone',
+ 'Zwiebel im Öl andünsten, Currypaste kurz mitrösten.|Süßkartoffelwürfel und Kokosmilch zugeben, 15 Minuten köcheln.|Kichererbsen und Spinat zugeben und 5 Minuten garen.|Mit Zitronensaft und Salz abschmecken.',
+ 'Topf','Mit Reis oder Fladenbrot servieren.');
+D2('🥣','Bulgursalat mit Petersilie',['Salat','Vegetarisch'],25,'einfach',3,
+ '200 g Bulgur;2 Tomate;1 Gurke;1 Bund Petersilie;1 Bund Minze;4 EL Olivenöl;2 Zitrone;1 EL Tomatenmark;Salz',
+ 'Bulgur mit heißem Wasser übergießen und 15 Minuten quellen lassen.|Tomaten, Gurke, Petersilie und Minze fein hacken.|Alles mit Olivenöl, Zitronensaft, Tomatenmark und Salz mischen.',
+ 'Schüssel','Je mehr Kräuter, desto frischer.');
+D2('🌯','Falafel-Wraps',['Vegetarisch'],20,'einfach',2,
+ '4 Falafel;2 Tortilla;100 g Hummus;1 Tomate;1 Gurke;30 g Salat;50 g Joghurt',
+ 'Falafel erhitzen.|Tortillas kurz erwärmen und mit Hummus bestreichen.|Mit Falafel, Salat, Tomate, Gurke und Joghurt belegen.|Einrollen.',
+ 'Pfanne','Mit Chilisoße wird es schärfer.');
+D2('🧆','Falafel-Teller mit Hummus',['Vegetarisch'],25,'einfach',2,
+ '250 g Falafel;150 g Hummus;1 Tomate;1 Gurke;100 g Rotkohl;1 Fladenbrot;1 Zitrone;1 EL Olivenöl',
+ 'Falafel nach Packungsangabe erhitzen.|Gemüse schneiden.|Hummus, Falafel, Gemüse und Fladenbrot anrichten.|Mit Olivenöl und Zitronensaft beträufeln.',
+ 'Backofen','Ein Mezze-Teller zum Teilen.');
+D2('🍆','Ratatouille',['Vegetarisch','Hausmannskost'],50,'einfach',3,
+ '1 Aubergine;2 Zucchini;2 Paprika;400 g Dosentomaten;1 Zwiebel;3 Zehe Knoblauch;4 EL Olivenöl;1 TL Thymian;1 Bund Basilikum;Salz;Pfeffer',
+ 'Gemüse in Würfel schneiden.|Zwiebel und Knoblauch im Öl anbraten, Gemüse zugeben und 10 Minuten braten.|Tomaten und Thymian zugeben, 25 Minuten köcheln.|Mit Basilikum, Salz und Pfeffer abschmecken.',
+ 'Topf','Mit Baguette oder Reis servieren.');
+D2('🫑','Gefüllte Paprika vegetarisch',['Vegetarisch','Aufläufe'],55,'mittel',2,
+ '4 Paprika;150 g Reis;1 Dose Mais;100 g Käse;300 g Passierte Tomaten;1 Zwiebel;1 EL Olivenöl;1 TL Paprikapulver;Salz;Pfeffer',
+ 'Backofen auf 200 °C vorheizen, Reis kochen.|Zwiebel im Öl anbraten und mit Reis, Mais, Gewürzen und der Hälfte des Käses mischen.|Paprika aushöhlen, füllen und in eine Form mit Tomatensoße stellen.|Mit Käse bestreuen und 30 Minuten backen.',
+ 'Auflaufform,Backofen,Topf','Die Deckel mitbacken.');
+D2('🥦','Blumenkohl-Käse-Auflauf',['Aufläufe','Vegetarisch'],45,'einfach',3,
+ '800 g Blumenkohl;200 g Käse;200 ml Sahne;100 ml Milch;1 EL Butter;1 EL Mehl;Muskat;Salz;Pfeffer',
+ 'Backofen auf 200 °C vorheizen, Blumenkohl in Röschen 5 Minuten vorkochen.|Aus Butter, Mehl, Milch und Sahne eine Soße kochen, mit Muskat, Salz und Pfeffer würzen.|Blumenkohl in eine Form geben, Soße und Käse darauf verteilen.|25 Minuten backen.',
+ 'Auflaufform,Backofen,Topf','Mit Semmelbröseln wird die Kruste knuspriger.');
+D2('🥒','Zucchini-Boote mit Tomaten und Mozzarella',['Vegetarisch','Aufläufe'],40,'einfach',2,
+ '2 Zucchini;200 g Kirschtomaten;125 g Mozzarella;1 Zwiebel;2 Zehe Knoblauch;2 EL Olivenöl;1 TL Oregano;Salz;Pfeffer',
+ 'Backofen auf 200 °C vorheizen, Zucchini halbieren und aushöhlen.|Fruchtfleisch mit Zwiebel, Knoblauch und Tomaten im Öl anbraten, würzen.|Boote füllen, mit Mozzarella belegen.|25 Minuten backen.',
+ 'Backofen,Backblech,Pfanne','Mit Hackfleisch ein Hauptgericht für Fleischesser.');
+D2('🥔','Kartoffel-Gemüse-Gratin',['Aufläufe','Vegetarisch'],60,'einfach',3,
+ '600 g Kartoffeln;1 Zucchini;1 Karotte;200 ml Sahne;100 ml Milch;100 g Käse;1 Zehe Knoblauch;1 TL Thymian;Salz;Pfeffer',
+ 'Backofen auf 180 °C vorheizen, Kartoffeln und Gemüse in dünne Scheiben schneiden.|In eine Form schichten, Sahne, Milch, Knoblauch, Thymian, Salz und Pfeffer verrühren und darübergießen.|Mit Käse bestreuen und 45 Minuten backen.',
+ 'Auflaufform,Backofen','Dünn schneiden ist das Wichtigste.');
+D2('🍄','Pilzpfanne mit Kräutern',['Vegetarisch','Schnell'],20,'einfach',2,
+ '500 g Champignons;2 Zehe Knoblauch;1 Bund Petersilie;2 EL Butter;100 ml Sahne;Salz;Pfeffer;2 Scheibe Brot',
+ 'Pilze in Scheiben schneiden und in Butter bei hoher Hitze braun braten.|Knoblauch zugeben, mit Sahne ablöschen und kurz einköcheln.|Mit Salz, Pfeffer und Petersilie abschmecken und mit Brot servieren.',
+ 'Pfanne','Pilze nicht zu früh salzen, sonst ziehen sie Wasser.');
+D2('🍛','Rotes Linsen-Curry mit Reis',['Vegetarisch','Asiatisch'],30,'einfach',3,
+ '200 g Linsen;400 ml Kokosmilch;1 Zwiebel;2 Zehe Knoblauch;1 EL Currypulver;1 EL Tomatenmark;200 g Reis;1 EL Öl;Salz',
+ 'Reis kochen.|Zwiebel und Knoblauch im Öl anbraten, Curry und Tomatenmark kurz mitrösten.|Linsen, Kokosmilch und 200 ml Wasser zugeben, 15 Minuten köcheln.|Mit Salz abschmecken und mit Reis servieren.',
+ 'Topf','Rote Linsen zerfallen und binden die Soße.');
+D2('🧀','Paneer-Curry mit Reis',['Vegetarisch','Asiatisch'],35,'einfach',2,
+ '250 g Paneer;200 g Reis;400 g Passierte Tomaten;100 ml Sahne;1 Zwiebel;2 Zehe Knoblauch;1 EL Garam Masala;1 TL Kurkuma;1 EL Ingwer;2 EL Öl;Salz',
+ 'Reis kochen, Paneer würfeln und im Öl goldbraun braten, herausnehmen.|Zwiebel, Knoblauch und Ingwer anbraten, Gewürze zugeben.|Tomaten und Sahne zugeben, 10 Minuten köcheln.|Paneer zugeben und mit Reis servieren.',
+ 'Pfanne,Topf','Halloumi geht als Ersatz.');
+D2('🥗','Couscous-Gemüse-Bowl',['Vegetarisch','Salat'],25,'einfach',2,
+ '150 g Couscous;250 ml Brühe;1 Zucchini;1 Paprika;100 g Feta;1 Zwiebel;2 EL Olivenöl;1 EL Essig;Salz;Pfeffer',
+ 'Gemüse würfeln und im Öl 8 Minuten braten.|Couscous mit heißer Brühe quellen lassen.|Alles mischen, mit Essig, Salz und Pfeffer abschmecken und Feta darübergeben.',
+ 'Pfanne,Topf','Passt warm und kalt.');
+D2('🍅','Gnocchi mit Tomatensoße',['Pasta','Italienisch','Vegetarisch'],25,'einfach',2,
+ '500 g Gnocchi;400 g Passierte Tomaten;2 Zehe Knoblauch;1 EL Olivenöl;1 Bund Basilikum;30 g Parmesan;Salz;Pfeffer',
+ 'Knoblauch im Öl andünsten, Tomaten zugeben und 10 Minuten köcheln.|Gnocchi in Salzwasser kochen, bis sie oben schwimmen.|Mit Soße mischen und Basilikum und Parmesan darübergeben.',
+ 'Topf,Pfanne','Gnocchi kurz in der Soße schwenken.');
+D2('🍄','Gnocchi mit Pilzrahmsoße',['Pasta','Vegetarisch'],25,'einfach',2,
+ '500 g Gnocchi;300 g Champignons;150 ml Sahne;1 Zwiebel;1 Bund Petersilie;1 EL Butter;30 g Parmesan;Salz;Pfeffer',
+ 'Pilze und Zwiebel in Butter anbraten.|Mit Sahne ablöschen und 5 Minuten köcheln.|Gnocchi kochen, in die Soße geben und mit Parmesan und Petersilie servieren.',
+ 'Pfanne,Topf','Gnocchi können auch in der Pfanne knusprig gebraten werden.');
+D2('🥟','Tortellini in Sahnesoße mit Spinat',['Pasta','Italienisch','Vegetarisch'],20,'einfach',2,
+ '250 g Tortellini;150 ml Sahne;100 g Spinat;30 g Parmesan;1 Zehe Knoblauch;1 EL Butter;Muskat;Salz;Pfeffer',
+ 'Tortellini nach Packungsangabe kochen.|Knoblauch in Butter anbraten, Sahne und Spinat zugeben.|Mit Muskat, Salz und Pfeffer würzen, Tortellini unterheben und mit Parmesan servieren.',
+ 'Topf,Pfanne','Schnell gemacht.');
+D2('🍅','Tortellini in Tomatensoße',['Pasta','Italienisch','Vegetarisch','Schnell'],20,'einfach',2,
+ '250 g Tortellini;400 g Passierte Tomaten;1 Zehe Knoblauch;1 EL Olivenöl;1 TL Oregano;30 g Parmesan;Salz;Pfeffer',
+ 'Knoblauch im Öl andünsten, Tomaten und Oregano zugeben, 8 Minuten köcheln.|Tortellini kochen und in die Soße geben.|Mit Parmesan servieren.',
+ 'Topf,Pfanne','Mit Basilikum garnieren.');
+D2('🧀','Mac and Cheese',['Pasta','Vegetarisch','Aufläufe'],30,'einfach',3,
+ '300 g Nudeln;250 g Käse;300 ml Milch;2 EL Butter;2 EL Mehl;1 TL Senf;Muskat;Salz;Pfeffer',
+ 'Nudeln kochen und abgießen.|Butter mit Mehl anschwitzen, Milch einrühren und eindicken.|Käse und Senf unterrühren, mit Muskat, Salz und Pfeffer würzen.|Nudeln unterheben, optional kurz überbacken.',
+ 'Topf','Mit Brokkoli für etwas Grün.');
+D2('🥣','Käse-Lauch-Suppe',['Suppen','Vegetarisch'],35,'einfach',3,
+ '2 Lauch;300 g Kartoffeln;1 Zwiebel;700 ml Brühe;150 g Käse;100 ml Sahne;1 EL Butter;Muskat;Salz;Pfeffer',
+ 'Lauch, Zwiebel und Kartoffeln klein schneiden und in Butter anbraten.|Mit Brühe aufgießen, 20 Minuten köcheln.|Käse und Sahne einrühren, pürieren und mit Muskat, Salz und Pfeffer abschmecken.',
+ 'Topf,Stabmixer','Mit angebratenen Speckwürfeln wird sie deftiger.');
+D2('🍜','Bami Goreng',['Asiatisch','Fleisch'],30,'einfach',2,
+ '250 g Nudeln;250 g Hähnchenbrust;200 g TK-Gemüse;1 Zwiebel;2 Zehe Knoblauch;3 EL Sojasauce;1 EL Sesamöl;1 EL Chilisauce;2 EL Öl',
+ 'Nudeln kochen und abgießen.|Hähnchen in Streifen im Öl braten, Zwiebel, Knoblauch und Gemüse zugeben.|Nudeln, Sojasauce, Sesamöl und Chilisauce zugeben und 3 Minuten braten.',
+ 'Wok oder große Pfanne,Topf','Mit einem Spiegelei obendrauf.');
+D2('🍳','Nasi Goreng',['Asiatisch','Vegetarisch'],25,'einfach',2,
+ '250 g Reis;2 Ei;200 g Erbsen;1 Karotte;3 Frühlingszwiebel;3 EL Sojasauce;1 EL Chilisauce;2 EL Öl',
+ 'Reis kochen und abkühlen lassen.|Karotte würfeln und im Öl braten, Erbsen und Reis zugeben.|Mit Sojasauce und Chilisauce würzen.|Spiegeleier braten und auf den Reis legen, Frühlingszwiebeln darüberstreuen.',
+ 'Wok oder große Pfanne,Topf','Reis vom Vortag funktioniert am besten.');
+D2('🍤','Pad Thai mit Garnelen',['Asiatisch','Fisch'],30,'mittel',2,
+ '200 g Reisnudeln;250 g Garnelen;2 Ei;3 Frühlingszwiebel;3 EL Sojasauce;1 EL Zucker;1 Zitrone;40 g Erdnüsse;2 Zehe Knoblauch;2 EL Öl',
+ 'Reisnudeln einweichen und abgießen.|Knoblauch und Garnelen im Öl 3 Minuten braten.|Eier einrühren und stocken lassen.|Nudeln, Sojasauce, Zucker und Zitronensaft zugeben, 3 Minuten durchschwenken und mit Erdnüssen servieren.',
+ 'Wok oder große Pfanne','Garnelen nur kurz braten, sonst werden sie zäh.');
+D2('🐟','Teriyaki-Lachs mit Reis und Brokkoli',['Fisch','Asiatisch'],30,'einfach',2,
+ '2 Lachs;200 g Reis;250 g Brokkoli;3 EL Sojasauce;2 EL Honig;1 EL Ingwer;1 EL Sesam;1 EL Öl',
+ 'Reis kochen, Brokkoli dämpfen.|Sojasauce, Honig und Ingwer verrühren.|Lachs im Öl pro Seite 3 Minuten braten, Sauce zugeben und glasieren.|Mit Sesam bestreuen und mit Reis und Brokkoli servieren.',
+ 'Pfanne,Topf','Die Glasur nicht zu lange einkochen.');
+D2('🥘','Gemüse-Curry mit Reis',['Asiatisch','Vegetarisch'],35,'einfach',3,
+ '200 g Reis;400 ml Kokosmilch;1 Paprika;1 Zucchini;200 g Brokkoli;2 EL Currypaste;1 Zwiebel;1 EL Öl;Salz',
+ 'Reis kochen.|Zwiebel im Öl anbraten, Currypaste mitrösten.|Gemüse und Kokosmilch zugeben und 12 Minuten köcheln.|Mit Salz abschmecken und mit Reis servieren.',
+ 'Topf','Mit Tofu oder Kichererbsen als Eiweiß.');
+D2('🍗','Hähnchen Teriyaki mit Reis',['Asiatisch','Fleisch'],30,'einfach',2,
+ '400 g Hähnchenbrust;200 g Reis;3 EL Sojasauce;2 EL Honig;1 EL Ingwer;2 Zehe Knoblauch;1 EL Öl;1 EL Sesam',
+ 'Reis kochen.|Hähnchen in Stücken im Öl 6 Minuten braten.|Sojasauce, Honig, Ingwer und Knoblauch zugeben und glasieren.|Mit Sesam und Reis servieren.',
+ 'Pfanne,Topf','Ein Klassiker aus Japan.');
+D2('🍍','Süß-Sauer-Gemüse mit Reis',['Asiatisch','Vegetarisch'],30,'einfach',2,
+ '200 g Reis;2 Paprika;1 Zucchini;200 g Ananas;3 EL Ketchup;2 EL Essig;2 EL Sojasauce;1 EL Zucker;1 EL Speisestärke;2 EL Öl',
+ 'Reis kochen.|Gemüse im Öl 6 Minuten braten.|Ketchup, Essig, Sojasauce, Zucker, Stärke und etwas Wasser verrühren, mit Ananas zugeben und 4 Minuten einkochen.|Mit Reis servieren.',
+ 'Wok oder große Pfanne,Topf','Mit Tofu wird es ein Hauptgericht.');
+D2('🥘','Thai-Curry mit Hähnchen',['Asiatisch','Fleisch'],35,'einfach',2,
+ '400 g Hähnchenbrust;400 ml Kokosmilch;2 EL Currypaste;1 Paprika;100 g Erbsen;200 g Reis;1 EL Öl;1 EL Sojasauce;1 Bund Basilikum',
+ 'Reis kochen.|Hähnchen im Öl anbraten, Currypaste kurz mitrösten.|Kokosmilch, Paprika und Erbsen zugeben, 12 Minuten köcheln.|Mit Sojasauce und Basilikum abschmecken und mit Reis servieren.',
+ 'Pfanne,Topf','Je nach Currypaste ist es mild oder scharf.');
+D2('🐟','Lachs mit Ofengemüse',['Fisch'],35,'einfach',2,
+ '2 Lachs;1 Paprika;200 g Brokkoli;1 Karotte;150 g Erbsen;2 EL Olivenöl;1 Zitrone;Salz;Pfeffer',
+ 'Backofen auf 200 °C vorheizen.|Gemüse mit Öl, Salz und Pfeffer auf einem Blech verteilen und 10 Minuten rösten.|Lachs darauflegen und weitere 15 Minuten backen.|Mit Zitronensaft beträufeln.',
+ 'Backofen,Backblech','Ein Blech, wenig Abwasch.');
+D2('🥩','Rindfleischstroganoff',['Fleisch','Hausmannskost'],40,'mittel',2,
+ '400 g Rindersteak;200 g Champignons;2 Gewürzgurke;1 Zwiebel;150 g Schmand;1 EL Tomatenmark;250 g Nudeln;2 EL Öl;1 TL Paprikapulver;Salz;Pfeffer',
+ 'Nudeln kochen.|Fleisch in Streifen scharf anbraten und herausnehmen.|Zwiebel und Pilze braten, Tomatenmark und Paprikapulver zugeben.|Mit Schmand und Gurkenstückchen verrühren, Fleisch zugeben und kurz erhitzen, mit Nudeln servieren.',
+ 'Pfanne,Topf','Fleisch nicht zu lange braten.');
+D2('🥔','Ofenkartoffeln mit Kräuter-Schmand',['Vegetarisch','Hausmannskost'],70,'einfach',2,
+ '4 Kartoffeln;2 EL Olivenöl;150 g Schmand;1 Bund Schnittlauch;50 g Käse;Salz;Pfeffer',
+ 'Backofen auf 200 °C vorheizen, Kartoffeln waschen, einstechen und mit Öl und Salz einreiben.|60 Minuten backen.|Einschneiden, mit Käse bestreuen und mit Schmand und Schnittlauch servieren.',
+ 'Backofen,Backblech','Mit Speck oder Hüttenkäse variieren.');
+D2('🍝','Ravioli mit Tomatensoße',['Pasta','Italienisch','Vegetarisch','Schnell'],20,'einfach',2,
+ '250 g Tortellini;400 g Passierte Tomaten;1 Zehe Knoblauch;1 Bund Basilikum;1 EL Olivenöl;30 g Parmesan;Salz;Pfeffer',
+ 'Tomaten mit Knoblauch und Öl 8 Minuten köcheln lassen.|Frische Pasta nach Packungsangabe kochen.|Mit der Soße mischen, Basilikum und Parmesan darübergeben.',
+ 'Topf,Pfanne','Frische Ravioli sind in 3 Minuten fertig.');
+D2('🥔','Bratkartoffeln mit Zwiebeln und Speck',['Hausmannskost','Fleisch'],35,'einfach',2,
+ '700 g Kartoffeln;100 g Speck;2 Zwiebel;2 EL Öl;1 Bund Petersilie;Salz;Pfeffer',
+ 'Kartoffeln kochen, pellen und in Scheiben schneiden.|Speck im Öl auslassen, Kartoffeln zugeben und 12 Minuten goldbraun braten.|Zwiebeln zugeben und 5 Minuten mitbraten.|Mit Salz, Pfeffer und Petersilie abschmecken.',
+ 'Pfanne,Topf','Nicht zu oft wenden, damit eine Kruste entsteht.');
+D2('🧀','Nudelauflauf mit Käse und Tomaten',['Aufläufe','Pasta','Vegetarisch'],40,'einfach',3,
+ '300 g Nudeln;200 g Käse;200 ml Sahne;200 g Kirschtomaten;1 Zwiebel;1 EL Butter;1 TL Oregano;Salz;Pfeffer',
+ 'Backofen auf 200 °C vorheizen, Nudeln 2 Minuten kürzer kochen.|Zwiebel in Butter anbraten, Sahne, Tomaten und Gewürze zugeben.|Nudeln mit der Soße in eine Form geben, Käse darüberstreuen.|20 Minuten überbacken.',
+ 'Auflaufform,Backofen,Topf','Nudeln kürzer kochen, sie garen im Ofen nach.');
+D2('🥦','Brokkoli in Käsesoße',['Vegetarisch','Schnell'],25,'einfach',2,
+ '600 g Brokkoli;150 g Käse;200 ml Sahne;1 EL Butter;1 Zehe Knoblauch;Muskat;Salz;Pfeffer;2 Scheibe Brot',
+ 'Brokkoli in Röschen 5 Minuten kochen.|Knoblauch in Butter anbraten, Sahne und Käse zugeben und schmelzen lassen.|Mit Muskat, Salz und Pfeffer würzen und über den Brokkoli geben.|Mit Brot servieren.',
+ 'Topf','Mit Kartoffeln oder Nudeln als Hauptgericht.');
+D2('🍜','Gemüse-Nudel-Suppe',['Suppen','Vegetarisch'],30,'einfach',3,
+ '100 g Nudeln;2 Karotte;1 Stange Sellerie;1 Zwiebel;800 ml Brühe;1 Bund Petersilie;1 EL Öl;Salz;Pfeffer',
+ 'Gemüse würfeln und im Öl 5 Minuten anbraten.|Mit Brühe aufgießen, 12 Minuten köcheln.|Nudeln zugeben und garen, mit Salz, Pfeffer und Petersilie abschmecken.',
+ 'Topf','Perfekt, wenn man sich erkältet fühlt.');
+
+/* ---- Rezepte passend zu den KI-Bildern, Teil G (Pasta) ---- */
+D2('🍝','Penne mit Spinat und Kirschtomaten',['Pasta','Italienisch','Vegetarisch'],25,'einfach',2,
+ '250 g Nudeln;150 g Spinat;200 g Kirschtomaten;2 Zehe Knoblauch;3 EL Olivenöl;30 g Parmesan;Salz;Pfeffer',
+ 'Nudeln kochen.|Knoblauch und Tomaten im Öl 5 Minuten braten, Spinat zugeben und zusammenfallen lassen.|Nudeln unterheben, mit Salz und Pfeffer abschmecken und Parmesan darüberreiben.',
+ 'Topf,Pfanne','Etwas Nudelwasser macht die Soße cremiger.');
+D2('🍚','Risotto mit grünem Spargel',['Italienisch','Vegetarisch'],40,'mittel',2,
+ '200 g Risottoreis;300 g Spargel;1 Zwiebel;700 ml Brühe;100 ml Weißwein;40 g Parmesan;2 EL Butter;Salz;Pfeffer',
+ 'Spargel in Stücke schneiden, Zwiebel in Butter anschwitzen.|Reis zugeben, mit Wein ablöschen.|Nach und nach heiße Brühe zugeben und 18 Minuten rühren, Spargel nach 10 Minuten zugeben.|Parmesan unterrühren.',
+ 'Topf','Brühe immer heiß zugeben.');
+D2('🥟','Gnocchi alla Sorrentina',['Pasta','Italienisch','Vegetarisch','Aufläufe'],35,'einfach',2,
+ '500 g Gnocchi;400 g Passierte Tomaten;125 g Mozzarella;1 Zehe Knoblauch;1 Bund Basilikum;30 g Parmesan;1 EL Olivenöl;Salz',
+ 'Backofen auf 220 °C vorheizen, Tomaten mit Knoblauch und Öl 8 Minuten einköcheln.|Gnocchi 2 Minuten vorkochen und mit der Soße in eine Form geben.|Mit Mozzarella und Parmesan belegen und 12 Minuten überbacken.',
+ 'Auflaufform,Backofen,Topf','Mit Basilikum servieren.');
+D2('🍲','One Pot Pasta mit Tomaten',['Pasta','Italienisch','Vegetarisch'],25,'einfach',2,
+ '250 g Nudeln;400 g Dosentomaten;1 Zwiebel;2 Zehe Knoblauch;500 ml Brühe;1 Bund Basilikum;30 g Parmesan;1 EL Olivenöl;Salz;Pfeffer',
+ 'Alles außer Parmesan und Basilikum in einen Topf geben.|Aufkochen und 12 Minuten köcheln, dabei gelegentlich rühren.|Mit Parmesan und Basilikum servieren.',
+ 'Topf','Nur ein Topf zum Abwaschen.');
+D2('🍝','Pasta al Forno',['Pasta','Italienisch','Aufläufe'],45,'einfach',3,
+ '300 g Nudeln;400 g Passierte Tomaten;200 g Mozzarella;100 g Hackfleisch;1 Zwiebel;30 g Parmesan;1 EL Olivenöl;1 TL Oregano;Salz;Pfeffer',
+ 'Backofen auf 200 °C vorheizen, Hack mit Zwiebel anbraten, Tomaten zugeben und köcheln.|Nudeln kochen und mit Soße mischen.|In eine Form füllen, mit Mozzarella und Parmesan belegen.|20 Minuten überbacken.',
+ 'Auflaufform,Backofen,Topf,Pfanne','Die Nudeln 2 Minuten kürzer kochen.');
+D2('🍝','Spaghetti mit Lachs',['Pasta','Fisch'],25,'einfach',2,
+ '250 g Spaghetti;200 g Lachs;150 ml Sahne;1 Zitrone;1 Bund Dill;1 Zehe Knoblauch;1 EL Butter;Salz;Pfeffer',
+ 'Spaghetti kochen.|Lachs würfeln und in Butter mit Knoblauch 3 Minuten braten.|Sahne zugeben und kurz einköcheln, mit Zitronensaft, Dill, Salz und Pfeffer abschmecken.|Spaghetti unterheben.',
+ 'Topf,Pfanne','Lachs nicht zu lange braten.');
+D2('🥦','Nudeln mit Brokkoli und Parmesan',['Pasta','Italienisch','Vegetarisch','Schnell'],20,'einfach',2,
+ '250 g Nudeln;300 g Brokkoli;2 Zehe Knoblauch;3 EL Olivenöl;40 g Parmesan;1 TL Chiliflocken;Salz;Pfeffer',
+ 'Nudeln kochen, Brokkoli die letzten 4 Minuten mitkochen.|Knoblauch und Chili im Öl andünsten.|Alles vermengen und mit Parmesan servieren.',
+ 'Topf,Pfanne','Mit Zitronenschale frischer.');
+D2('🍝','Pasta mit Gemüse',['Pasta','Italienisch','Vegetarisch'],30,'einfach',2,
+ '250 g Nudeln;1 Zucchini;1 Paprika;200 g Kirschtomaten;2 Zehe Knoblauch;3 EL Olivenöl;1 Bund Basilikum;30 g Parmesan;Salz;Pfeffer',
+ 'Nudeln kochen.|Gemüse würfeln und im Öl 8 Minuten braten, Knoblauch zugeben.|Mit den Nudeln mischen, Basilikum und Parmesan darübergeben.',
+ 'Topf,Pfanne','Alle Gemüsereste gehen hier.');
+D2('🍝','Spaghetti alla Panna mit Schinken',['Pasta','Fleisch','Italienisch'],20,'einfach',2,
+ '250 g Spaghetti;100 g Schinken;200 ml Sahne;40 g Parmesan;1 EL Butter;Pfeffer;Muskat',
+ 'Spaghetti kochen.|Schinken in Butter anbraten, Sahne zugeben und kurz einköcheln.|Parmesan einrühren, mit Pfeffer und Muskat würzen und mit den Spaghetti mischen.',
+ 'Topf,Pfanne','Ein Klassiker für schnelle Abende.');
+D2('🍄','Nudeln mit Champignons in Sahnesoße',['Pasta','Vegetarisch'],25,'einfach',2,
+ '250 g Nudeln;300 g Champignons;150 ml Sahne;1 Zwiebel;1 Bund Petersilie;1 EL Butter;30 g Parmesan;Salz;Pfeffer',
+ 'Nudeln kochen.|Pilze und Zwiebel in Butter braun braten, mit Sahne ablöschen.|Mit Salz und Pfeffer würzen, mit Nudeln mischen und mit Petersilie und Parmesan servieren.',
+ 'Topf,Pfanne','Pilze in zwei Portionen braten, dann bräunen sie besser.');
+D2('🍝','Spaghetti mit Pesto Rosso',['Pasta','Italienisch','Vegetarisch','Schnell'],20,'einfach',2,
+ '250 g Spaghetti;200 g Kirschtomaten;3 EL Tomatenmark;50 g Mandeln;30 g Parmesan;2 Zehe Knoblauch;4 EL Olivenöl;Salz;Pfeffer',
+ 'Spaghetti kochen.|Tomaten, Tomatenmark, Mandeln, Knoblauch, Parmesan und Öl zu einem groben Pesto pürieren.|Mit Nudelwasser verdünnen und mit den Spaghetti mischen.',
+ 'Topf,Stabmixer','Getrocknete Tomaten machen es noch intensiver.');
+D2('🍝','Cannelloni mit Spinat und Ricotta',['Pasta','Aufläufe','Vegetarisch','Italienisch'],60,'mittel',3,
+ '250 g Lasagneplatten;250 g Ricotta;200 g Spinat;500 g Passierte Tomaten;125 g Mozzarella;30 g Parmesan;1 Zehe Knoblauch;1 EL Olivenöl;Muskat;Salz;Pfeffer',
+ 'Backofen auf 190 °C vorheizen, Spinat zusammenfallen lassen und mit Ricotta, Muskat, Salz und Pfeffer mischen.|Platten damit füllen und aufrollen, in eine Form mit Tomatensoße legen.|Mit Soße, Mozzarella und Parmesan bedecken und 30 Minuten backen.',
+ 'Auflaufform,Backofen,Pfanne','Frische Lasagneplatten lassen sich leichter rollen.');
+D2('🥟','Ravioli mit Ricotta und Butter',['Pasta','Italienisch','Vegetarisch'],20,'einfach',2,
+ '250 g Tortellini;3 EL Butter;1 Bund Petersilie;30 g Parmesan;1 TL Pfeffer;Salz',
+ 'Ravioli nach Packungsangabe kochen.|Butter schmelzen und leicht bräunen.|Pasta in der Butter schwenken, mit Parmesan, Petersilie und Pfeffer servieren.',
+ 'Topf,Pfanne','Mit Salbei in der Butter noch klassischer.');
+D2('🦐','Linguine mit Garnelen',['Pasta','Fisch','Italienisch'],25,'einfach',2,
+ '250 g Nudeln;250 g Garnelen;200 g Kirschtomaten;3 Zehe Knoblauch;100 ml Weißwein;3 EL Olivenöl;1 Bund Petersilie;1 TL Chiliflocken;Salz;Pfeffer',
+ 'Nudeln kochen.|Knoblauch und Chili im Öl andünsten, Garnelen 2 Minuten braten.|Tomaten und Wein zugeben und 5 Minuten köcheln.|Nudeln unterheben und mit Petersilie servieren.',
+ 'Topf,Pfanne','Garnelen nur kurz braten.');
+D2('🥦','Orecchiette mit Brokkoli und Parmesan',['Pasta','Italienisch','Vegetarisch'],25,'einfach',2,
+ '250 g Nudeln;300 g Brokkoli;2 Zehe Knoblauch;1 TL Chiliflocken;3 EL Olivenöl;40 g Parmesan;Salz',
+ 'Nudeln kochen, Brokkoli 4 Minuten mitkochen.|Knoblauch und Chili im Öl andünsten.|Brokkoli etwas zerdrücken, mit den Nudeln mischen und Parmesan darübergeben.',
+ 'Topf,Pfanne','Ein Klassiker aus Apulien.');
+D2('🎀','Farfalle mit Tomaten und Basilikum',['Pasta','Italienisch','Vegetarisch','Schnell'],20,'einfach',2,
+ '250 g Nudeln;300 g Kirschtomaten;2 Zehe Knoblauch;3 EL Olivenöl;1 Bund Basilikum;30 g Parmesan;Salz;Pfeffer',
+ 'Nudeln kochen.|Tomaten und Knoblauch im Öl 6 Minuten braten, bis sie aufplatzen.|Mit Nudeln mischen, Basilikum und Parmesan zugeben.',
+ 'Topf,Pfanne','Reife Tomaten sind das Wichtigste.');
+D2('🥗','Fusilli mit Gemüse und Mozzarella',['Pasta','Italienisch','Vegetarisch'],25,'einfach',2,
+ '250 g Nudeln;125 g Mozzarella;1 Zucchini;200 g Kirschtomaten;1 Paprika;3 EL Olivenöl;1 Bund Basilikum;Salz;Pfeffer',
+ 'Nudeln kochen.|Gemüse würfeln und im Öl 8 Minuten braten.|Nudeln unterheben, mit Mozzarella und Basilikum servieren.',
+ 'Topf,Pfanne','Warm oder lauwarm als Salat.');
 
 const KCATS = [['all','Alle','🍽️'],['Pasta','Pasta','🍝'],['Fleisch','Fleisch','🍖'],['Fisch','Fisch','🐟'],['Aufläufe','Aufläufe','🧀'],['Suppen','Suppen','🥣'],['Hausmannskost','Hausmannskost','🥔'],['Asiatisch','Asiatisch','🍜'],['Italienisch','Italienisch','🍅'],['Vegetarisch','Vegetarisch','🥦'],['Schnell','Schnell','⏱️'],['Frühstück','Frühstück','🥣'],['Salat','Salat','🥗'],['Snack','Snacks','🍪'],['Backen','Backen','🧁']];
 /* Vegetarisch automatisch prüfen (Fleisch/Fisch-Zutat → nie vegetarisch) */
@@ -4830,8 +5213,8 @@ function imgPrompt(r){
   const main = r.ing.filter(i => i.a != null && !i.basic).map(i => ({n:i.n, g:gramsOf(ingInfo(i.n), i.a, i.u) || 0})).sort((a, b) => b.g - a.g).slice(0, 5).map(x => ING_EN[x.n] || x.n);
   const look = DISH_EN[r.id] || `${r.n}, a home-cooked dish`;
   return `Photorealistic professional food photograph of ${look}. Served ${vessel}. Main ingredients visible: ${main.join(', ')}. Dish is ${method}. ` +
-    `High-end cookbook style: soft natural window light from the side, gentle shadows, shallow depth of field, 45-degree camera angle, dark stone or walnut table, linen napkin, minimal props, ` +
-    `natural true-to-life colors, realistic textures, appetizing and authentic presentation, landscape 4:3. ` +
+    `High-end cookbook style: soft natural window light from the side, gentle shadows, shallow depth of field, exact 90-degree top-down overhead flat lay, dark stone or walnut table, linen napkin, minimal props, ` +
+    `natural true-to-life colors, realistic textures, appetizing and authentic presentation, square 1:1. ` +
     `Avoid: any text, letters, labels, watermark, logo, cartoon or illustration style, CGI or plastic look, oversaturated colors, people, hands, ingredients that are not in this recipe.`;
 }
 const imgKind = r => !D.photos[r.id] ? 'none' : (D.imgAi || {})[r.id] ? 'ai' : 'own';
@@ -5140,6 +5523,19 @@ imgCard = function(r){
   if (stockOf(r) && imgKind(r) === 'none') h = h.replace('Noch kein Bild – angezeigt wird eine Illustration.', 'Angezeigt wird ein freies Foto eines ähnlichen Gerichts. Du kannst es durch dein eigenes Foto ersetzen.');
   return h;
 };
+
+/* ---- KI-Bilder aus fotos.js haben Vorrang vor den freien Fotos ---- */
+const aiOf = r => (window.NS_FOTOS || {})[r.id] || null;
+const _imgOf9b = imgOf;
+imgOf = function(r, big){
+  const a = aiOf(r);
+  if (a && !(D.photos || {})[r.id]) return `<img class="kph" data-id="${esc(r.id)}" src="${a}" alt="${esc(r.n)}" decoding="async"><span class="aib${big ? ' big' : ''}">KI-Bild</span>`;
+  return _imgOf9b(r, big);
+};
+const _imgNote9b = imgNoteTxt;
+imgNoteTxt = function(r){ return aiOf(r) && imgKind(r) === 'none' ? ' Das Bild ist KI-generiert und zeigt nicht euer konkretes Gericht.' : _imgNote9b(r); };
+const _imgCard9b = imgCard;
+imgCard = function(r){ let h = _imgCard9b(r); if (aiOf(r) && imgKind(r) === 'none') h = h.replace(/Angezeigt wird ein freies Foto[^<]*|Noch kein Bild – angezeigt wird eine Illustration\./, 'Angezeigt wird euer KI-Bild. Du kannst es durch ein eigenes Foto ersetzen.'); return h; };
 
 /* ---------- 11 Eigenständiger Betrieb: Barcode-Scan (Open Food Facts) ---------- */
 ui.bc = ui.bc || {status: 'idle', code: '', food: null, msg: ''};
