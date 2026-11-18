@@ -852,6 +852,37 @@ h1{font-weight:800;letter-spacing:-.035em}
 [data-theme=light] .bt-week{background:#C7CEFF}[data-theme=light] .bt-cart{background:#A8E8C9}[data-theme=light] .bt-trk{background:#FFC4AD}
 .khero{border-radius:28px}
 
+#logm{position:fixed;inset:0;z-index:10000;display:none;align-items:flex-end}
+#logm .lm-bg{position:absolute;inset:0;background:rgba(0,0,0,.6)}
+#logm .lm-sheet{position:relative;width:100%;background:var(--card2,#1B1B1E);color:var(--ink,#F4F1EB);border-radius:28px 28px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom));border:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+#logm .lm-h{font-size:20px;font-weight:800;letter-spacing:-.02em}
+#logm .lm-l{font-size:13px;color:var(--ink3);margin-top:4px}
+#logm .lm-c{display:flex;gap:8px;flex-wrap:wrap}
+#logm .lm-n{margin-top:6px;font-size:15px;color:var(--ink2)}#logm .lm-n b{color:var(--ink)}
+#logm .lm-s{font-size:12px;color:var(--ink3)}
+#logm .lm-b{display:flex;gap:10px;margin-top:8px}#logm .lm-b .btn{flex:1;margin:0}
+.nsl{display:flex;flex-direction:column;gap:8px}
+.nsr{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:8px;cursor:pointer}
+.nsr-i{position:relative;width:64px;height:64px;border-radius:14px;overflow:hidden;flex:none}.nsr-i img,.nsr-i svg,.nsr-i>*{width:100%;height:100%;object-fit:cover;display:block}
+.nsr-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}.nsr-t b{font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.nsr-t span{font-size:12.5px;color:var(--ink3)}
+.nsr-p{background:var(--accSoft);color:var(--acc);font-weight:800;font-size:13px;border-radius:10px;padding:6px 10px;margin-right:4px;white-space:nowrap}
+.nsr-i .aib{display:none}
+.ns-modal{position:fixed;inset:0;z-index:10000;display:none;align-items:flex-end}
+.ns-modal .lm-bg{position:absolute;inset:0;background:rgba(0,0,0,.6)}
+.ns-modal .lm-sheet{position:relative;width:100%;background:var(--card2,#1B1B1E);color:var(--ink,#F4F1EB);border-radius:28px 28px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom));border:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+.ns-modal .lm-h{font-size:20px;font-weight:800;letter-spacing:-.02em}.ns-modal .lm-l{font-size:13px;color:var(--ink3);margin-top:4px}
+.ns-modal .lm-c{display:flex;gap:8px;flex-wrap:wrap}.ns-modal .lm-n{margin-top:6px;font-size:14.5px;color:var(--ink2);line-height:1.45}.ns-modal .lm-n b{color:var(--ink)}
+.ns-modal .lm-b{display:flex;gap:10px;margin-top:8px}.ns-modal .lm-b .btn{flex:1;margin:0}
+.wp-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:14px}
+.wp-top b{font-size:30px;font-weight:800;letter-spacing:-.03em}.wp-top span{font-size:13px;color:var(--ink3)}
+.wp-st{text-align:right;display:flex;flex-direction:column}.wp-st b{font-size:22px;color:var(--acc)}
+.wp-dots{display:flex;justify-content:space-between;margin-bottom:12px}
+.wp-d{display:flex;flex-direction:column;align-items:center;gap:6px}.wp-d small{font-size:11px;color:var(--ink3)}
+.wp-d i{width:30px;height:30px;border-radius:50%;border:2px solid var(--line);display:block}
+.wp-d i.p1{background:color-mix(in srgb,var(--acc) 30%,transparent);border-color:transparent}
+.wp-d i.p2{background:color-mix(in srgb,var(--acc) 65%,transparent);border-color:transparent}
+.wp-d i.p3{background:var(--acc);border-color:transparent}
+
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -5887,6 +5918,139 @@ window.__NS_STEPS="k01=Zwiebel schälen und sehr fein würfeln, Knoblauch fein h
     </div>`;
     const m = h.indexOf('</article>');
     return m < 0 ? bento + h : h.slice(0, m + 10) + bento + h.slice(m + 10);
+  };
+})();
+
+/* ---------- 16 Gegessen eintragen, Tagesvorschläge, Kühlschrank ---------- */
+(function(){
+  const R1x = x => Math.round(x * 10) / 10;
+  const mealNow = () => { const h = new Date().getHours(); return h < 10 ? 'breakfast' : h < 15 ? 'lunch' : h < 21 ? 'dinner' : 'snack'; };
+  const lm = {open: false, r: null, eat: 1, meal: 'dinner'};
+  const ensure = () => { let el = document.getElementById('logm'); if (!el) { el = document.createElement('div'); el.id = 'logm'; document.body.appendChild(el); } return el; };
+  const fm2 = n => n === .5 ? '½' : n === 1.5 ? '1½' : String(n);
+  function drawLog(){
+    const el = ensure(); if (!lm.open || !lm.r) { el.style.display = 'none'; return; }
+    const r = lm.r, v = kcNut(r) || {k: 0, p: 0, c: 0, f: 0, cov: 0};
+    el.style.display = 'flex';
+    el.innerHTML = `<div class="lm-bg" data-act="lgClose"></div><div class="lm-sheet" role="dialog" aria-label="In den Tracker eintragen">
+      <div class="lm-h">${esc(r.n)}</div>
+      <div class="lm-l">Portionen</div><div class="lm-c">${[.5, 1, 1.5, 2].map(n => `<button class="chip ${lm.eat === n ? 'on' : ''}" data-act="lgEat" data-v="${n}">${fm2(n)}</button>`).join('')}</div>
+      <div class="lm-l">Mahlzeit</div><div class="lm-c">${MEALS.map(m => `<button class="chip ${lm.meal === m.id ? 'on' : ''}" data-act="lgMeal" data-v="${m.id}">${m.n}</button>`).join('')}</div>
+      <div class="lm-n"><b>${Math.round(v.k * lm.eat)}</b> kcal · <b>${Math.round(v.p * lm.eat)}</b> g Protein · ${Math.round(v.c * lm.eat)} g Kohlenhydrate · ${Math.round(v.f * lm.eat)} g Fett</div>
+      ${v.cov < 1 ? `<div class="lm-s">Richtwert aus den Zutaten, nicht alle Zutaten haben Nährwerte.</div>` : ''}
+      <div class="lm-b"><button class="btn sec" data-act="lgClose">Abbrechen</button><button class="btn" data-act="lgSave">Eintragen</button></div></div>`;
+  }
+  function openLog(r){ if (!r) return; Object.assign(lm, {open: true, r, eat: 1, meal: mealNow()}); drawLog(); }
+  document.addEventListener('click', ev => {
+    const a = ev.target.closest('[data-act^="lg"]'); if (!a) return;
+    const act = a.dataset.act;
+    if (act === 'lgOpen') { ev.stopPropagation(); openLog(kcById(a.dataset.id || ui.kr)); }
+    else if (act === 'lgClose') { lm.open = false; drawLog(); }
+    else if (act === 'lgEat') { lm.eat = +a.dataset.v; drawLog(); }
+    else if (act === 'lgMeal') { lm.meal = a.dataset.v; drawLog(); }
+    else if (act === 'lgSave') {
+      const r = lm.r, v = kcNut(r); if (!r || !v) { lm.open = false; drawLog(); return; }
+      const e = makeEntry({n: r.n + (lm.eat !== 1 ? ` (${fm2(lm.eat)} Port.)` : ''), g: null, per100: null, t: {k: R1x(v.k * lm.eat), p: R1x(v.p * lm.eat), c: R1x(v.c * lm.eat), f: R1x(v.f * lm.eat)}, src: 'recipe'}, lm.meal, todayStr());
+      e.rid = r.id; e.eat = lm.eat; if (v.cov < 1) e.note = 'Richtwert aus den Zutaten';
+      addEntries([e]); lm.open = false; drawLog(); toast('Im Tracker eingetragen'); render();
+    }
+  }, true);
+  /* Ende des Kochmodus bietet das Eintragen an */
+  document.addEventListener('click', ev => { if (ev.target.closest('[data-act="cmDone"]')) setTimeout(() => openLog(kcById(ui.kr)), 50); });
+
+  const _vK16 = viewKDetail;
+  viewKDetail = function(){
+    const h = _vK16(), r = kcById(ui.kr); if (!r) return h;
+    const b = `<button class="btn sec" data-act="lgOpen" data-id="${esc(r.id)}">Gegessen – in Tracker eintragen</button>`;
+    return h.includes('Kochmodus starten</button>') ? h.replace('Kochmodus starten</button>', 'Kochmodus starten</button>' + b) : h.replace('<div class="kbtns">', '<div class="kbtns">' + b);
+  };
+
+  const row = (r, sub, tag) => `<article class="nsr" data-act="kOpen" data-id="${esc(r.id)}" tabindex="0" role="button" aria-label="${esc(r.n)}"><div class="nsr-i">${imgOf(r)}</div><div class="nsr-t"><b>${esc(r.n)}</b><span>${sub}</span></div>${tag}</article>`;
+  const _home16 = homeHTML;
+  homeHTML = function(){
+    const h = _home16(); let extra = '';
+    try {
+      const S = D.settings, rem = remainingFor(todayStr()), ok = recoAll().filter(x => !x.no).map(x => x.r);
+      if (S.kcal > 0 && rem.k >= 200) {
+        const c = [];
+        ok.forEach(r => { const v = kcNut(r); if (v && v.cov >= .8 && v.k <= Math.min(rem.k + 60, 850) && v.p >= 15) c.push({r, v}); });
+        c.sort((a, b) => b.v.p - a.v.p);
+        const top = c.slice(0, 4);
+        if (top.length) extra += section('Passt noch in deinen Tag', `Noch ${Math.round(rem.k)} kcal und ${Math.max(0, Math.round(rem.p))} g Protein offen`, top.map(x => row(x.r, `${Math.round(x.v.k)} kcal · ${x.r.t} Min.`, `<span class="nsr-p">${Math.round(x.v.p)} g P</span>`)).join(''), 'nsl');
+      }
+      if (D.fridge.length) {
+        const f = [];
+        ok.forEach(r => { const ing = r.ing.filter(i => { const inf = ingInfo(i.n); return inf && !inf.basic && !inf.hide; }); if (ing.length < 2) return; const have = ing.filter(i => fridgeFor(i.n).length).length; if (have >= 2 && have / ing.length >= .5) f.push({r, have, n: ing.length}); });
+        f.sort((a, b) => b.have / b.n - a.have / a.n || b.have - a.have);
+        if (f.length) extra += section('Aus deinem Kühlschrank', 'Gerichte, für die du schon vieles da hast', f.slice(0, 5).map(x => row(x.r, `${x.have} von ${x.n} Zutaten da · ${x.r.t} Min.`, '')).join(''), 'nsl');
+      }
+    } catch (e) {}
+    if (!extra) return h;
+    const m = h.indexOf('<section class="ksec">');
+    return m < 0 ? h + extra : h.slice(0, m) + extra + h.slice(m);
+  };
+})();
+
+/* ---------- 17 Meal-Prep und Wochenpunkte ---------- */
+(function(){
+  /* ===== Meal-Prep: ein Gericht auf mehrere Tage legen ===== */
+  const pm = {open: false, r: null, days: 3, off: 0};
+  const el17 = () => { let e = document.getElementById('prepm'); if (!e) { e = document.createElement('div'); e.id = 'prepm'; e.className = 'ns-modal'; document.body.appendChild(e); } return e; };
+  function drawPrep(){
+    const e = el17(); if (!pm.open || !pm.r) { e.style.display = 'none'; return; }
+    const per = persons(), r = pm.r, start = addDays(todayStr(), pm.off), end = addDays(start, pm.days - 1);
+    e.style.display = 'flex';
+    e.innerHTML = `<div class="lm-bg" data-act="pmClose"></div><div class="lm-sheet" role="dialog" aria-label="Meal-Prep">
+      <div class="lm-h">Vorkochen: ${esc(r.n)}</div>
+      <div class="lm-l">Für wie viele Tage?</div><div class="lm-c">${[2, 3, 4, 5].map(n => `<button class="chip ${pm.days === n ? 'on' : ''}" data-act="pmDays" data-v="${n}">${n} Tage</button>`).join('')}</div>
+      <div class="lm-l">Start</div><div class="lm-c">${[[0, 'Heute'], [1, 'Morgen'], [2, 'Übermorgen']].map(([o, l]) => `<button class="chip ${pm.off === o ? 'on' : ''}" data-act="pmOff" data-v="${o}">${l}</button>`).join('')}</div>
+      <div class="lm-n">Du kochst einmal <b>${per * pm.days} Portionen</b> (${per} ${per === 1 ? 'Person' : 'Personen'} × ${pm.days} Tage). Das Gericht kommt von <b>${dayLabel(start)}</b> bis <b>${dayLabel(end)}</b> in den Wochenplan. Die Einkaufsliste rechnet die Menge für alle Tage zusammen.</div>
+      <div class="lm-b"><button class="btn sec" data-act="pmClose">Abbrechen</button><button class="btn" data-act="pmSave">In den Plan</button></div></div>`;
+  }
+  document.addEventListener('click', ev => {
+    const a = ev.target.closest('[data-act^="pm"]'); if (!a) return; const act = a.dataset.act;
+    if (act === 'pmOpen') { Object.assign(pm, {open: true, r: kcById(a.dataset.id || ui.kr), days: 3, off: 0}); drawPrep(); }
+    else if (act === 'pmClose') { pm.open = false; drawPrep(); }
+    else if (act === 'pmDays') { pm.days = +a.dataset.v; drawPrep(); }
+    else if (act === 'pmOff') { pm.off = +a.dataset.v; drawPrep(); }
+    else if (act === 'pmSave') { const per = persons(), s = addDays(todayStr(), pm.off); for (let i = 0; i < pm.days; i++) addPlan(pm.r.id, addDays(s, i), per); pm.open = false; drawPrep(); toast(`${pm.days} Tage im Wochenplan`); render(); }
+  }, true);
+  const _vK17 = viewKDetail;
+  viewKDetail = function(){
+    const h = _vK17(), r = kcById(ui.kr); if (!r) return h;
+    const b = `<button class="btn sec" data-act="pmOpen" data-id="${esc(r.id)}">Vorkochen für mehrere Tage</button>`;
+    return h.includes('in Tracker eintragen</button>') ? h.replace('in Tracker eintragen</button>', 'in Tracker eintragen</button>' + b) : h;
+  };
+
+  /* ===== Wochenpunkte und Serie (nur auf diesem Gerät) ===== */
+  function dayPts(d){
+    const S = D.settings, es = entriesOn(d); if (!es.length) return 0;
+    const T = sumT(es); let p = 1;
+    if (S.p > 0 && T.p >= .9 * S.p) p++;
+    if (S.kcal > 0 && T.k >= .8 * S.kcal && T.k <= 1.1 * S.kcal) p++;
+    return p;
+  }
+  function streak(){
+    let d = todayStr(), n = 0;
+    if (!entriesOn(d).length) d = addDays(d, -1);
+    while (n < 400 && entriesOn(d).length) { n++; d = addDays(d, -1); }
+    return n;
+  }
+  const _vT17 = viewToday;
+  viewToday = function(){
+    const h = _vT17(); if (ui.date !== todayStr()) return h;
+    let card = '';
+    try {
+      const days = lastNDays(7, todayStr()), pts = days.map(dayPts), sum = pts.reduce((a, b) => a + b, 0), st = streak();
+      const wd = d => new Date(d + 'T12:00:00').toLocaleDateString('de-DE', {weekday: 'short'}).slice(0, 2);
+      card = `<div class="card wp"><h2>Meine Woche</h2>
+        <div class="wp-top"><div><b>${sum}</b><span> von 21 Punkten</span></div><div class="wp-st"><b>${st}</b><span>${st === 1 ? 'Tag' : 'Tage'} in Folge getrackt</span></div></div>
+        <div class="wp-dots">${days.map((d, i) => `<div class="wp-d"><i class="p${pts[i]}"></i><small>${wd(d)}</small></div>`).join('')}</div>
+        <div class="faint small">Pro Tag: 1 Punkt fürs Tracken, 1 fürs Proteinziel (ab 90 %), 1 für Kalorien (80–110 % des Ziels).</div></div>`;
+    } catch (e) {}
+    if (!card) return h;
+    const i = h.indexOf('<div class="card"', h.indexOf('<div class="card"') + 10);
+    return i < 0 ? h.replace(/<\/div>\s*$/, card + '</div>') : h.slice(0, i) + card + h.slice(i);
   };
 })();
 
