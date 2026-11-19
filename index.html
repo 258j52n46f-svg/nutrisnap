@@ -882,6 +882,15 @@ h1{font-weight:800;letter-spacing:-.035em}
 .wp-d i.p1{background:color-mix(in srgb,var(--acc) 30%,transparent);border-color:transparent}
 .wp-d i.p2{background:color-mix(in srgb,var(--acc) 65%,transparent);border-color:transparent}
 .wp-d i.p3{background:var(--acc);border-color:transparent}
+.abbtn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:15px 16px;margin:0 0 12px;color:var(--ink);font-family:inherit;cursor:pointer}
+.abbtn b{display:block;font-size:16px;font-weight:800;color:var(--acc)}.abbtn span{font-size:13px;color:var(--ink3)}.abbtn i{font-style:normal;font-size:24px;color:var(--ink3)}
+.pl-sheet{max-height:86vh;overflow:auto}
+.pl-note{font-size:13.5px;line-height:1.45;color:var(--ink2);background:var(--accSoft);border-radius:14px;padding:10px 12px}
+.pl-list{display:flex;flex-direction:column;gap:12px}
+.pl-t{border:1px solid var(--line);border-radius:20px;padding:14px;display:flex;flex-direction:column;gap:7px}.pl-t.now{border-color:var(--acc)}
+.pl-th{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:4px}.pl-th b{font-size:18px;font-weight:800;display:block}.pl-th span{font-size:12.5px;color:var(--ink3)}.pl-th em{font-style:normal;font-weight:800;color:var(--acc);white-space:nowrap}
+.pl-p{display:flex;gap:9px;align-items:baseline;font-size:14px}.pl-p i{font-style:normal;color:var(--acc);width:14px;flex:none}.pl-p span{flex:1}.pl-p.soon{color:var(--ink3)}.pl-p small{font-size:11px;border:1px solid var(--line);border-radius:8px;padding:1px 6px}
+.pl-cur{font-size:12.5px;color:var(--acc);font-weight:700;margin-top:4px}
 
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -6051,6 +6060,41 @@ window.__NS_STEPS="k01=Zwiebel schälen und sehr fein würfeln, Knoblauch fein h
     if (!card) return h;
     const i = h.indexOf('<div class="card"', h.indexOf('<div class="card"') + 10);
     return i < 0 ? h.replace(/<\/div>\s*$/, card + '</div>') : h.slice(0, i) + card + h.slice(i);
+  };
+})();
+
+/* ---------- 18 Abo-Stufen (Vorschau, noch nicht buchbar) ---------- */
+(function(){
+  /* Preise bewusst leer: erst eintragen, wenn sie feststehen. */
+  const TIERS = [
+    {id: 'basis', n: 'Basis', who: 'Für alle', price: 'Kostenlos', now: true, pts: [
+      ['Alle 269 Rezepte mit detaillierter Zubereitung', 1], ['Wochenplan, Einkaufsliste, Meal-Prep', 1], ['Kochmodus mit Timern', 1],
+      ['Tracker mit Marken, Gerichten und Barcode', 1], ['Protein- und Kalorien-Filter, Tagesvorschläge', 1], ['Export deiner Daten, immer gratis', 1], ['Keine Werbung, keine KI nötig', 1]]},
+    {id: 'plus', n: 'Plus', who: 'Für dich allein', price: 'Preis folgt', pts: [
+      ['Alles aus Basis', 1], ['Sync auf mehreren Geräten', 0], ['Wettbewerbe und Gruppen mit Freunden', 0], ['Statistiken über Monate und Jahre', 0], ['Automatische Cloud-Sicherung', 0]]},
+    {id: 'haus', n: 'Haushalt', who: 'Für 2 bis 4 Personen, ein Preis', price: 'Preis folgt', pts: [
+      ['Alles aus Plus', 1], ['Gemeinsamer Wochenplan und Einkaufsliste', 0], ['Gemeinsamer Vorrat', 0], ['Eigene Ziele für jede Person', 0]]}
+  ];
+  const el = () => { let e = document.getElementById('planm'); if (!e) { e = document.createElement('div'); e.id = 'planm'; e.className = 'ns-modal'; document.body.appendChild(e); } return e; };
+  let open = false;
+  function draw(){
+    const e = el(); if (!open) { e.style.display = 'none'; return; }
+    e.style.display = 'flex';
+    e.innerHTML = `<div class="lm-bg" data-act="abClose"></div><div class="lm-sheet pl-sheet" role="dialog" aria-label="Abo-Stufen">
+      <div class="lm-h">Abo-Stufen</div>
+      <div class="pl-note"><b>Vorschau.</b> Aktuell kann nichts gebucht werden, und nichts ist gesperrt: Du nutzt alle Funktionen kostenlos. Punkte mit „geplant“ gibt es noch nicht.</div>
+      <div class="pl-list">${TIERS.map(t => `<div class="pl-t ${t.now ? 'now' : ''}"><div class="pl-th"><div><b>${t.n}</b><span>${t.who}</span></div><em>${t.price}</em></div>
+        ${t.pts.map(([x, ok]) => `<div class="pl-p ${ok ? '' : 'soon'}"><i aria-hidden="true">${ok ? '✓' : '○'}</i><span>${x}</span>${ok ? '' : '<small>geplant</small>'}</div>`).join('')}
+        ${t.now ? '<div class="pl-cur">Das nutzt du gerade</div>' : ''}</div>`).join('')}</div>
+      <div class="lm-b"><button class="btn" data-act="abClose">Schließen</button></div></div>`;
+  }
+  document.addEventListener('click', ev => {
+    const a = ev.target.closest('[data-act="abOpen"],[data-act="abClose"]'); if (!a) return;
+    open = a.dataset.act === 'abOpen'; draw();
+  }, true);
+  const _vp18 = viewProfile;
+  viewProfile = function(){
+    return _vp18().replace('<h1>Profil</h1>', '<h1>Profil</h1><button class="abbtn" data-act="abOpen"><div><b>Abo-Stufen</b><span>Basis, Plus und Haushalt: was ist enthalten, was ist geplant</span></div><i aria-hidden="true">›</i></button>');
   };
 })();
 
