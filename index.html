@@ -5858,7 +5858,7 @@ imgCard = function(r){ let h = _imgCard9b(r); if (aiOf(r) && imgKind(r) === 'non
 (function(){
   const _sf = searchFoods, fold = s => norm(s).replace(/ae/g, 'a').replace(/oe/g, 'o').replace(/ue/g, 'u');
   searchFoods = function(q){
-    const r = _sf(q); if (r.length >= 40 || !String(q).trim()) return r;
+    const r = _sf(q); if (!r || r.length >= 40 || !String(q).trim()) return r;
     const toks = fold(q).split(/\s+/).filter(Boolean), seen = new Set(r.map(f => f.id));
     const more = FOODS.filter(f => !seen.has(f.id) && toks.every(t => fold(f.n).includes(t)));
     return r.concat(more).slice(0, 40);
